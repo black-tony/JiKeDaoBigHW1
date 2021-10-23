@@ -8,10 +8,11 @@
 
 <head>
   <style>
+    <!--元素实体虚化-->
     .pointer-events-none{
       pointer-events:none;
     }
-
+    
     *{box-sizing:border-box}
     
     body{
@@ -20,7 +21,39 @@
       background-color: #70c3e9;
       font-family:'Press Start 2P' ;
     }
-    
+
+    /* .warpper{
+      position: fixed;
+      top:0;
+      left:0;
+      width:100%;
+      height: calc(100%-100px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin-top: 50px;
+    } */
+
+    .input_wrapper{
+      position: absolute;
+      bottom: 50px;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      z-index: -1;
+    }
+
+    .inner_wrapper{
+      width:calc(100%-20px);
+      max-width: 500px;
+      display:flex;
+      flex-direction:column;
+    }
+
+
+
     textarea{
       margin:0;
       padding:5px 8px;
@@ -61,6 +94,75 @@
       right:10px;
       font-size: 10px;
     }
+
+  /*如果文档高度小于320px就将wrapper下的外边距高度减去40px*/
+    @media screen and (max-height:320px){
+      .warpper{
+        margin-top: -40px;
+      }
+    }
+
+    .flex_wrapper{
+      width: 100%;
+      padding-left: calc(20%+100px);
+      display:flex;
+      flex-wrap:wrap;
+      align-items:center;
+      opacity:0;
+    }
+
+    .plane_wrapper{
+      position:absolute;
+      display:flex;
+      align-items:center;
+    }
+
+    .sprite_container{
+      position: relative;
+      width: 60px;
+      height:60px;
+      overflow:hidden;
+    }
+
+    .sprite{
+      position: absolute;
+      height:60px;
+      width:120px;
+      transform-origin:center bottom;
+    }
+
+    .rope{
+      margin:0 -2px 0 -22px;
+      height: 60px;
+      width: 60px;
+      z-index: -1;
+      transform-origin: center left;
+      transition: 0.4s;
+    }
+
+    .message_ghost,
+    .message{
+      height:30px;
+      line-height: 30px;
+      background-color: white;
+      color: navy;
+      padding:0px 8px;
+    }
+
+    .module{
+      position: relative;
+      transition: 0.7 ease-in-out;
+    }
+
+    a{
+      color:white;
+      text-decoration: none;
+    }
+
+    a:hover{
+      text-decoration: underline;
+    }
+
   </style>
 </head>
 
