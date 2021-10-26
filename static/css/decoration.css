@@ -1,0 +1,168 @@
+<!--box-sizing 对所有元素元素的总高度和宽度包括了内边距和边框-->
+  <!--body 背景颜色，像素字体-->
+  <!--textarea 输入框的背景颜色，像素字体（不适用于中文）字体颜色-->
+    <!--元素实体虚化-->
+    *{box-sizing:border-box}
+
+    .pointer-events-none{
+      pointer-events:none;
+    }
+
+    body{
+      margin:0;
+      padding:0;
+      background-color: #70c3e9;
+      font-family:'Press Start 2P' ;
+    }
+
+    .warpper{
+      position: fixed;
+      top:0;
+      left:0;
+      width:100%;
+      height: calc(100%-100px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin-top: 50px;
+    }
+
+    /*如果文档高度小于320px就将wrapper下的外边距高度减去40px*/
+    @media screen and (max-height:320px){
+      .warpper{
+        margin-top: -40px;
+      }
+    }
+    .flex_wrapper{
+      width: 100%;
+      padding-left: calc(20%+100px);
+      display:flex;
+      flex-wrap:wrap;
+      align-items:center;
+      opacity:0;
+    }
+
+    .plane_wrapper{
+      position:absolute;
+      display:flex;
+      align-items:center;
+    }
+
+    .sprite_container{
+      position: relative;
+      width: 60px;
+      height:60px;
+      overflow:hidden;
+    }
+
+    .sprite{
+      position: absolute;
+      height:60px;
+      width:120px;
+      transform-origin:center bottom;
+    }
+
+    .rope{
+      margin:0 -2px 0 -22px;
+      height: 60px;
+      width: 60px;
+      z-index: -1;
+      transform-origin: center left;
+      transition: 0.4s;
+    }
+
+    .message_ghost,
+    .message{
+      height:30px;
+      line-height: 30px;
+      background-color: white;
+      color: navy;
+      padding:0px 8px;
+    }
+
+    .module{
+      position: relative;
+      transition: 0.7 ease-in-out;
+    }
+
+    .front{display: flex;}
+
+    .input_wrapper{
+      position: absolute;
+      bottom: 60px;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      z-index: -1;
+    }
+
+    .inner_wrapper{
+      width:calc(100%-20px);
+      max-width: 1000px;
+      display:flex;
+      flex-direction:column;
+    }
+
+
+
+    textarea{
+      padding:5px 0px;
+      border: 0;
+      width:100%;
+      height:80px;
+      background-color: rgba(255,255,255,0.4);
+      color:navy;
+      font-family: 'Press Start 2P';
+    }
+
+
+    button{
+      margin:8px 0 0 auto;
+      padding:5px 8px;
+      border:0;
+      background-color: navy;
+      color:white;
+      font-family: 'Press Start 2P';
+    }
+
+    button:hover{
+      color:navy;
+      background-color: white;
+      cursor:pointer;
+    }
+
+    a{
+      color:white;
+    }
+
+    a:hover{
+      color:red;
+      text-decoration: underline;
+    }
+
+    .sign{
+      position: fixed;
+      color:red;
+      bottom: 10px;
+      right:10px;
+      font-size: 10px;
+    }
+
+    .playvideo{
+      margin:8px 0 14px auto;
+      padding:1px 1px;
+      border:0;
+      border-left: 7px solid white;
+      border-right: 7px solid white;
+      border-top: 7px solid white;
+      border-bottom: 7px solid white;
+      border-radius: 20px;
+    }
+
+    .myimage{
+      position: fixed;
+      bottom: 10px;
+    }
