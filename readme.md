@@ -30,6 +30,7 @@
 
 `truncate(num[,bool])` 截取指定长度字符串,后面使用…显示
 
+使用示例: `{{userName | trim}}`
 
 #### 在这里写下html文件和对应需要的参数
 例如 <font color = red>仅仅是例子!</font>
