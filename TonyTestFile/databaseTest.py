@@ -16,7 +16,7 @@ class MysqlUtil:
         port = PORT_CONST
         password = PASSWORD_CONST
         database = DATABASE_CONST
-        self.db = pymysql.connect(host=host, port=3306, user=user, password=password, db=database)
+        self.db = pymysql.connect(host=host, port=port, user=user, password=password, db=database)
         self.cursor = self.db.cursor(cursor=pymysql.cursors.DictCursor)
 
     def insert(self, sql):
