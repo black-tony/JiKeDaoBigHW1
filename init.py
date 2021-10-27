@@ -5,9 +5,14 @@ app = flask.Flask(__name__)
 
 
 # 现在是运行起来之后,http://127.0.0.1:5000/ 这里可以看到html的内容了
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def website():
-    return render_template("website.html")
+    if request.method == 'GET':
+        return render_template("website.html")
+    else:
+        userName = request.form['userName']
+        passWord = request.form['passWord']
+    return render_template("website.html", name=userName)
 
 
 @app.route('/login', methods=['GET', 'POST'])
