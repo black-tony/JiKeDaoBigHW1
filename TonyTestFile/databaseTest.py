@@ -30,9 +30,7 @@ class MysqlUtil:
             self.db.close()
 
     def fetchone(self, sql):
-        """
-            return with list<dictionary>
-        """
+        # return with list<dictionary>
         try:
             self.cursor.execute(sql)
             result = self.cursor.fetchone()
@@ -44,9 +42,7 @@ class MysqlUtil:
         return result
 
     def fetchall(self, sql):
-        """
-            return with list<dictionary>
-        """
+        # return with list<dictionary>
         try:
             self.cursor.execute(sql)
             results = self.cursor.fetchall()
