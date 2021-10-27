@@ -9,13 +9,25 @@ PASSWORD_CONST = "Gz8ymJMXfbr#3*5"
 DATABASE_CONST = "test_db"
 
 
-class MysqlUtil:
-    def __init__(self):
+class MysqlUtil(object):
+
+    def __init__(self, databaseName=DATABASE_CONST):
         host = HOST_CONST
         user = USER_CONST
         port = PORT_CONST
         password = PASSWORD_CONST
-        database = DATABASE_CONST
+        database = databaseName
+        self.db = pymysql.connect(host=host, port=port, user=user, password=password, db=database)
+        self.cursor = self.db.cursor(cursor=pymysql.cursors.DictCursor)
+
+    def ChangeDatabase(self, databaseName):
+        self.db.close()
+        self.cursor.close()
+        host = HOST_CONST
+        user = USER_CONST
+        port = PORT_CONST
+        password = PASSWORD_CONST
+        database = databaseName
         self.db = pymysql.connect(host=host, port=port, user=user, password=password, db=database)
         self.cursor = self.db.cursor(cursor=pymysql.cursors.DictCursor)
 
@@ -31,6 +43,7 @@ class MysqlUtil:
 
     def fetchone(self, sql):
         # return with list<dictionary>
+        result = list()
         try:
             self.cursor.execute(sql)
             result = self.cursor.fetchone()
@@ -43,6 +56,7 @@ class MysqlUtil:
 
     def fetchall(self, sql):
         # return with list<dictionary>
+        result = list()
         try:
             self.cursor.execute(sql)
             results = self.cursor.fetchall()
