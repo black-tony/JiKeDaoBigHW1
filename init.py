@@ -10,4 +10,9 @@ def website():
     return render_template("website.html")
 
 
+@app.route('/login')
+def login():
+    return render_template("login.html")
+
+
 app.run(debug=True)
