@@ -2,6 +2,7 @@ import string
 import traceback
 import pymysql
 
+_DEBUG = True
 HOST_CONST = "localhost"
 USER_CONST = "root"
 PORT_CONST = 3306
@@ -32,6 +33,8 @@ class MysqlUtil(object):
                 sql += ', '
             sql += i
         sql += "FROM " + table
+        if _DEBUG:
+            print(sql)
         if condition != "NULL":
             sql += f'WHERE "{condition}"'
         sql += ';'
@@ -71,6 +74,8 @@ class MysqlUtil(object):
                 sql += f"{secondPart}"
 
         sql += ');'
+        if _DEBUG:
+            print(sql)
         try:
             self.cursor.execute(sql)
             self.db.commit()
@@ -111,6 +116,8 @@ class MysqlUtil(object):
 
     def delete(self, table, condition):
         sql = f"DELETE FROM {table} WHERE {condition}"
+        if _DEBUG:
+            print(sql)
         try:
             self.cursor.execute(sql)
             self.db.commit()
@@ -135,6 +142,8 @@ class MysqlUtil(object):
                 sql += f"{secondVal}"
         if condition != "NULL":
             sql += condition
+        if _DEBUG:
+            print(sql)
         try:
             self.cursor.execute(sql)
             self.db.commit()
