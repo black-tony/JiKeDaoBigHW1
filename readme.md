@@ -61,8 +61,9 @@
 
 ## 可能会有用到的内容
 
-### 前段传递参数到后端:
+### 前端传递参数到后端:
 
+####方法1
 使用post方法 从form中读取数据
 ```html
 <form action="url" method="post">
@@ -73,6 +74,65 @@ url写的是表单要交到哪一个位置(后端在哪里处理数据)
 method要写post
 
 input中`name`属性是变量名, **必须要写这个**, 否则后端获取数据比较麻烦
+
+**在一个页面中有多个form时, 需要指定form的name加以区分**
+
+#### 方法2
+使用socket.emit方法
+
+同样是用form
+
+1. 给form一个id
+2. 在html文件中插入如下内容:
+```html
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js" integrity="sha512-aMGMvNYu8Ue4G+fHa359jcPb1u+ytAF+P2SCb+PxrjCdO3n3ZTxJ30zuH39rimUggmTwmh2u7wvQsDTHESnmfQ==" crossorigin="anonymous"></script>
+<script type="text/javascript" charset="utf-8">
+$(document).ready(function() {
+    var socket = io();
+    $('form#表单的ID').submit(function(event) {
+        socket.emit('这里写下对这个事件的命名', 
+        {
+            提交回服务端的变量名1: 变量1的内容,
+            .........变量名2: 变量2的内容,
+            //可以使用$('元件类型(可省略)#元件ID').val()的形式获取内容
+            //可以有0个或若干个变量, 对事件的命名是必须的
+        });
+        return false;
+    });
+}
+</script>
+
+```
+### 在不需要换网页实时进行数据传递的方法
+
+
+使用socket.on方法
+
+1. 在html文件中插入如下内容(重复内容只需要插入一次):
+```html
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js" integrity="sha512-aMGMvNYu8Ue4G+fHa359jcPb1u+ytAF+P2SCb+PxrjCdO3n3ZTxJ30zuH39rimUggmTwmh2u7wvQsDTHESnmfQ==" crossorigin="anonymous"></script>
+<script type="text/javascript" charset="utf-8">
+$(document).ready(function() {
+    var socket = io();
+    //这之前都是重复内容
+    
+    
+    socket.on(function(data, callback) {
+        使用data.变量名 方法访问服务器端传来的数据
+        也可以在这里socket.emit(参数见上文), 再向服务器发送一条消息
+        if(callback)//回调函数, 暂时不知道有啥用(
+            callback(函数参数);
+    });
+}
+</script>
+
+```
+**对实时通信的socket功能还不太了解的话, 可以看在/TonyTestFile/test_socket.py和/TonyTestFile/templates/socket_html.html来进一步看源代码**
+
 
 ### html中使用传递的变量的方法
 
