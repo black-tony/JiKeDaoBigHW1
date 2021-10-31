@@ -1,0 +1,100 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+a {
+    text-decoration: none;
+    color: #222;
+}
+ul,ol,li {
+    list-style: none;
+}
+.clearfix::after {
+    content: '';
+    display: block;
+    clear: both;
+}
+body {
+    font-family: "Microsoft YaHei",Arial,Helvetica,sans-serif;
+    font-size: 12px;
+}
+/*页面主体*/
+.main-page{
+    width: 980px;
+    min-height: 1900px;
+    margin: 0 auto;
+    position: relative;
+}
+/*顶部*/
+.header{
+    position: relative;
+    min-width: 980px;
+}
+
+.nav-img {
+    background-image: url('../images/toplog.png');
+    height: 170px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/*分区导航*/
+.guide-wrapper {
+    position: relative;
+    text-align:center;
+    margin: 5px 0 5px -860px;
+}
+.guide-wrapper > ul {
+    display: inline-block;
+    height: 50px;
+}
+.guide-wrapper > ul > li {
+    float: left;
+    display: block;
+    position: relative;
+    font-size: 14px;
+    height: 50px;
+}
+
+.guide-wrapper > ul > li >a {
+    position: relative;
+    font-size: 14px;
+    color: #222;
+    display: block;
+}
+
+.guide-wrapper > ul > li > a > span {
+    display: inline-block;
+    line-height: 50px;
+    height: 40px;
+    margin: 0 10px;
+    padding-top: 8px;
+}
+.guide-wrapper > ul > li > a >.num {
+    position: absolute;
+    text-align: center;
+    top: 8px;
+    left: 0;
+    height: 14px;
+    width: 100%;
+}
+.guide-wrapper > ul > li > a >.num > span {
+    display: inline-block;
+    background-color: #7ac5cd;
+    color: #fff;
+    padding: 1px 3px;
+    font-size: 11px;
+    height: 14px;
+    line-height: 12px;
+    vertical-align: top;
+    min-width: 18px;
+    border-radius: 4px;
+    text-align: center;
+}
+
+/*页面主体*/
+.main-page{
+    width: 1200px;
+    margin:0 auto;
+}
