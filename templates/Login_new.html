@@ -10,10 +10,10 @@
 		<script type="text/javascript" charset="utf-8">
 		$(document).ready(function() {
 			var socket = io();     
-			socket.on("login_response", function(error_code, callback) {
-				if(error_code.response==1)
+			socket.on("login_response", function(data, callback) {
+				if(data.error_code==1)
 					alert("无此用户信息");
-				else if(error_code.response==2)
+				else if(data.error_code==2)
 					alert("输入密码错误");
 			});
 		})
