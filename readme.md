@@ -75,7 +75,9 @@ method要写post
 
 input中`name`属性是变量名, **必须要写这个**, 否则后端获取数据比较麻烦
 
-**在一个页面中有多个form时, 需要指定form的name加以区分**
+~~**在一个页面中有多个form时, 需要指定form的name加以区分**~~
+
+在一个页面有多个form时, 需要使用方法2 或者 (action填写不同的url). form的name必须指定以方便电脑区分
 
 #### 方法2
 使用socket.emit方法
