@@ -1,0 +1,58 @@
+/*每日推荐*/
+.main-page > .recommend {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 40px;
+}
+.main-page > .recommend > .rec-carousel {
+    position: relative;
+    width: 530px;
+    height: 220px;
+    overflow: hidden;
+    border-radius: 4px;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.main-page > .recommend > .rec-ct {
+    display: flex;
+    width: 840px;
+    height: 220px;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: space-between;
+}
+.main-page > .recommend > .rec-ct > .rec-item {
+    position: relative;
+    width: 160px;
+    height: 100px;
+    border-radius: 4px;
+    overflow: hidden;
+}
+.main-page > .recommend > .rec-ct > .rec-item >a >.info-card {
+    position: absolute;
+    top: 68px;
+    width: 160px;
+    padding: 10px 5px;
+    height: 40px;
+    line-height: 20px;
+    overflow: hidden;
+    background: linear-gradient(transparent,rgba(0,0,0,.1) 20%,rgba(0,0,0,.2) 35%,rgba(0,0,0,.6) 65%,rgba(0,0,0,.9));
+}
+.main-page > .recommend > .rec-ct > .rec-item >a >.info-card >.info{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 40px;
+    opacity: 0;
+}
+.main-page > .recommend > .rec-ct > .rec-item >a >.info-card >p{
+    color: #99a2aa;
+}
+.main-page > .recommend > .rec-ct > .rec-item >a >.info-card >p:nth-child(1){
+    color: #fff;
+    height: 40px;
+    overflow: hidden;
+    margin-bottom: 5px;
+}

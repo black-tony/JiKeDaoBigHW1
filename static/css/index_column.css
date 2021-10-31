@@ -1,0 +1,90 @@
+/*动画*/
+.main-page >.column {
+    margin-bottom: 55px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.main-page>.column>.column-left{
+    width: 1200px;
+    height: 180px;
+}
+
+.main-page > .column>.column-left>.column-title{
+    margin-bottom: 15px;
+    margin-right: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 26px!important;
+    line-height: 24px;
+    font-weight: bold;
+    color: #222;
+}
+
+.main-page > .column> .column-left>a >.findmore{
+    margin-bottom: 10px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.main-page > .column >.column-left>.column-ct{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.main-page > .column >.column-left>.column-ct>i{
+    width: 180px;
+}
+
+.main-page > .column>.column-left >.column-ct >.item{
+    width: 180px;
+    height: 160px;
+    margin-bottom: 30px;
+    overflow: hidden;
+    position: relative;
+
+}
+.main-page > .column >.column-left>.column-ct >.item >a >.pic{
+    position: relative;
+    width: 160px;
+    height: 100px;
+}
+.main-page > .column>.column-left >.column-ct >.item >a >.pic >img{
+    border-radius: 4px;
+    width: 200px;
+    height: 100px;
+}
+
+.main-page > .column>.column-left >.column-ct >.item >a >.a-hover {
+    padding-top: 8px;
+    height: 50px;
+    line-height: 20px;
+    color: #222;
+    word-wrap: break-word;
+    word-break: break-tab-item-a;
+    overflow: hidden;
+    text-align: left;
+}
+
+
+/*实线*/
+.line_01{  
+    margin-top: 10px;
+    margin-bottom: 25px;
+    height: 1px;  
+    border-top: 2px dotted #DEDEDE;  
+    text-align: center;  
+}  
+
+/*标题下划线*/
+.line_02{
+    background: #ddd;
+    margin-top: 4px;
+    display: inline-block;
+    width: 180px;
+    height: 1px;
+    _overflow: hidden;
+    vertical-align: middle;
+}

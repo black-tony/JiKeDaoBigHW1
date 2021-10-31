@@ -63,7 +63,7 @@
 
 ### 前端传递参数到后端:
 
-####方法1
+#### 方法1
 使用post方法 从form中读取数据
 ```html
 <form action="url" method="post">
@@ -123,7 +123,7 @@ $(document).ready(function() {
     //这之前都是重复内容
     
     
-    socket.on(function(data, callback) {
+    socket.on(”事件名“, function(data, callback) {
         使用data.变量名 方法访问服务器端传来的数据
         也可以在这里socket.emit(参数见上文), 再向服务器发送一条消息
         if(callback)//回调函数, 暂时不知道有啥用(

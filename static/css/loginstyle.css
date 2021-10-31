@@ -51,18 +51,17 @@ body{
 	border: 1px solid #b2b2b2;
 }
 
-.wrapper .header .form .btn{
-	margin: 10px 0;
-	background-color: #3897f0;
-    border: 1px solid #3897f0;
-    border-radius: 4px;
-    text-align: center;
-    padding: 5px;
-}
-
-.wrapper .header .form .btn a{
+.wrapper .header .form .btn input{
+	margin: 20px 0 0 2px;
+	padding: 5px;
 	color: #fff;
 	display: block;
+	background-color: #3897f0;
+	border: 1px solid #3897f0;
+	text-align: center;
+	border-radius: 4px;
+	width: 265px;
+	height: 27px;
 }
 
 .wrapper .header .or{
@@ -104,19 +103,4 @@ body{
 
 .wrapper .signup a{
 	color: #3897f0;
-}
-
-video{  
-   position: fixed;  
-   right: 0px;  
-   bottom: 0px;  
-   min-width: 100%;  
-   min-height: 100%;  
-   height: auto;  
-   width: auto;  
-   /*加滤镜*/
-   /*filter: blur(15px); //背景模糊设置 */
-   /*-webkit-filter: grayscale(100%);*/  
-   /*filter:grayscale(100%); //背景灰度设置*/  
-   z-index:-11
 }
