@@ -1,23 +1,19 @@
 import string
 import traceback
 import pymysql
+import Myconstants
 
 _DEBUG = True
-HOST_CONST = "localhost"
-USER_CONST = "root"
-PORT_CONST = 3306
-PASSWORD_CONST = "Gz8ymJMXfbr#3*5"
-DATABASE_CONST = "test_db"
 TABLE_CONST = "employee"
 
 
 class MysqlUtil(object):
 
-    def __init__(self, databaseName=DATABASE_CONST):
-        host = HOST_CONST
-        user = USER_CONST
-        port = PORT_CONST
-        password = PASSWORD_CONST
+    def __init__(self, databaseName=Myconstants.DATABASE_CONST):
+        host = Myconstants.HOST_CONST
+        user = Myconstants.USER_CONST
+        port = Myconstants.PORT_CONST
+        password = Myconstants.PASSWORD_CONST
         database = databaseName
         self.db = pymysql.connect(host=host, port=port, user=user, password=password, db=database)
         self.cursor = self.db.cursor(cursor=pymysql.cursors.DictCursor)
@@ -32,26 +28,29 @@ class MysqlUtil(object):
             else:
                 sql += ', '
             sql += i
-        sql += "FROM " + table
+        sql += " FROM " + table
+
+        if condition != "NULL":
+            sql += f' WHERE {condition}'
+        sql += ';'
         if _DEBUG:
             print(sql)
-        if condition != "NULL":
-            sql += f'WHERE "{condition}"'
-        sql += ';'
         return sql
 
     def ChangeDatabase(self, databaseName):
         self.db.close()
         self.cursor.close()
-        host = HOST_CONST
-        user = USER_CONST
-        port = PORT_CONST
-        password = PASSWORD_CONST
+        host = Myconstants.HOST_CONST
+        user = Myconstants.USER_CONST
+        port = Myconstants.PORT_CONST
+        password = Myconstants.PASSWORD_CONST
         database = databaseName
         self.db = pymysql.connect(host=host, port=port, user=user, password=password, db=database)
         self.cursor = self.db.cursor(cursor=pymysql.cursors.DictCursor)
 
-    def insert(self, table=TABLE_CONST, **fields_and_vals):
+    def insert(self, table=TABLE_CONST, fields_and_vals=None):
+        if fields_and_vals is None:
+            fields_and_vals = {}
         sql = "INSERT INTO " + table
         sql += '('
         haveQuote = 0
