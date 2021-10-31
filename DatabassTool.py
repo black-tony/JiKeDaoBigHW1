@@ -9,7 +9,7 @@ TABLE_CONST = "employee"
 
 class MysqlUtil(object):
 
-    def __init__(self, databaseName=Myconstants.DATABASE_CONST):
+    def __init__(self, databaseName=Myconstants.DATABASE_CONST, closeInst=True):
         host = Myconstants.HOST_CONST
         user = Myconstants.USER_CONST
         port = Myconstants.PORT_CONST
@@ -17,6 +17,7 @@ class MysqlUtil(object):
         database = databaseName
         self.db = pymysql.connect(host=host, port=port, user=user, password=password, db=database)
         self.cursor = self.db.cursor(cursor=pymysql.cursors.DictCursor)
+        self.closeAtOnce = closeInst
 
     @staticmethod
     def __phraseSQL(table, fields, condition="NULL"):
@@ -37,7 +38,10 @@ class MysqlUtil(object):
             print(sql)
         return sql
 
-    def ChangeDatabase(self, databaseName):
+    def setCloseTime(self, closeInst=True):
+        self.closeAtOnce = closeInst
+
+    def changeDatabase(self, databaseName):
         self.db.close()
         self.cursor.close()
         host = Myconstants.HOST_CONST
@@ -54,7 +58,7 @@ class MysqlUtil(object):
         sql = "INSERT INTO " + table
         sql += '('
         haveQuote = 0
-        for firstPart, secondPart in fields_and_vals:
+        for firstPart, secondPart in fields_and_vals.items():
             if haveQuote == 0:
                 haveQuote = 1
             else:
@@ -62,7 +66,7 @@ class MysqlUtil(object):
             sql += f"{firstPart}"
         sql += ') VALUES ('
         haveQuote = 0
-        for firstPart, secondPart in fields_and_vals:
+        for firstPart, secondPart in fields_and_vals.items():
             if haveQuote == 0:
                 haveQuote = 1
             else:
@@ -82,7 +86,8 @@ class MysqlUtil(object):
             traceback.print_exc()
             self.db.rollback()
         finally:
-            self.db.close()
+            if self.closeAtOnce:
+                self.db.close()
 
     def fetchone(self, table, condition="NULL", *fields):
         # return with list<dictionary>
@@ -96,7 +101,8 @@ class MysqlUtil(object):
             traceback.print_exc()
             self.db.rollback()
         finally:
-            self.db.close()
+            if self.closeAtOnce:
+                self.db.close()
         return result
 
     def fetchall(self, table, condition="NULL", *fields):
@@ -124,12 +130,15 @@ class MysqlUtil(object):
             traceback.print_exc()
             self.db.rollback()
         finally:
-            self.db.close()
+            if self.closeAtOnce:
+                self.db.close()
 
-    def update(self, condition="NULL", table=TABLE_CONST, **fields_and_vals):
+    def update(self, condition="NULL", table=TABLE_CONST, fields_and_vals=None):
+        if fields_and_vals is None:
+            fields_and_vals = {}
         sql = f'UPDATE {table} SET '
         haveQuote = 0
-        for firstVal, secondVal in fields_and_vals:
+        for firstVal, secondVal in fields_and_vals.items():
             if haveQuote == 0:
                 haveQuote = 1
             else:
@@ -150,4 +159,5 @@ class MysqlUtil(object):
             traceback.print_exc()
             self.db.rollback()
         finally:
-            self.db.close()
+            if self.closeAtOnce:
+                self.db.close()

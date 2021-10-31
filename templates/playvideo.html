@@ -71,7 +71,11 @@
   <span class="glyphicon" aria-hidden="true">&#xe096</span>
   <span class="glyphicon" aria-hidden="true">&#xe097</span>
 </div>
+
+
+
 </body>
+
 
 <script src="../static/src/js/jquery-2.1.4.min.js"></script>
 <script src="../static/src/js/jquery.shCircleLoader.js"></script>
@@ -79,16 +83,9 @@
 <script src="../static/src/js/colpick.js"></script>
 <script src="../static/src/js/jquery.danmu.js"></script>
 <script src="../static/src/js/main.js"></script>
-<script src="../static/js/jquery.params.js"></script>
-
 <script>
-
-  $(function(){
-    var name = $.query.get("name");
-    $("#name").text(name);
-  });
-  $("#danmup").DanmuPlayer({    
-    src:name,
+  $("#danmup").DanmuPlayer({
+    src:"level5.mp4",
     height: "680px", //区域的高度
     width: "1100px" //区域的宽度
     ,urlToGetDanmu:"query.php"
