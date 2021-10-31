@@ -1,10 +1,13 @@
 import flask
 from flask import request, render_template, redirect
+from flask_socketio import SocketIO
 
 import Myconstants
 from DatabassTool import MysqlUtil
 
 app = flask.Flask(__name__)
+app.config['SECRET_KEY'] = "r`9[M-AtuO"
+socketio = SocketIO(app, async_mode=None)
 
 
 # 现在是运行起来之后,http://127.0.0.1:5000/ 这里可以看到html的内容了
@@ -28,8 +31,14 @@ def login():
                                  f'{Myconstants.USER_NAME}="{userName}"',
                                  Myconstants.USER_PSWD, Myconstants.USER_RANK)
             # 没查找到暂时先转回原网页
-            if not result or passWord != result[Myconstants.USER_PSWD]:
-                return redirect("/login")
+            findResult = 0
+            if not result:
+                findResult = 1
+            elif passWord != result[Myconstants.USER_PSWD]:
+                findResult = 2
+            if findResult > 0:
+                socketio.emit("login_response", {"error_code": findResult})
+                return render_template('')
             # 找到暂时先转到生成的网页
             express = f"<h2>hello !{userName} </h2><h2>Your password is {passWord}!</h2>" + \
                       f"<h2>Your Rank Is {result[Myconstants.USER_RANK]}</h2>"
@@ -64,4 +73,5 @@ def register():
         return redirect("/login")
 
 
-app.run(debug=True)
+if __name__ == "__main__":
+    app.run(debug=True)
