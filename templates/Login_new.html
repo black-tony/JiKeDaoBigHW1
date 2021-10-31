@@ -1,60 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>biubiu～(∠・ω< )⌒★ Hello~~</title>
-	<link rel="stylesheet" href="../static/css/loginstyle.css">
-</head>
-<body>
+	<head>
+		<meta charset="UTF-8">
+		<title>biubiu～(∠・ω< )⌒★ Hello~~</title>
+		<link rel="stylesheet" href="../static/css/loginstyle.css">
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js" integrity="sha512-aMGMvNYu8Ue4G+fHa359jcPb1u+ytAF+P2SCb+PxrjCdO3n3ZTxJ30zuH39rimUggmTwmh2u7wvQsDTHESnmfQ==" crossorigin="anonymous"></script>
-<script type="text/javascript" charset="utf-8">
-$(document).ready(function() {
-    var socket = io();     
-    socket.on("login_response", function(data, callback) {
-    	if(data.response==1)
-    		alert("无此用户信息");
-    	else if(data.response==2)
-    		alert("输入密码错误");
-    });
-}
-</script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js" integrity="sha512-aMGMvNYu8Ue4G+fHa359jcPb1u+ytAF+P2SCb+PxrjCdO3n3ZTxJ30zuH39rimUggmTwmh2u7wvQsDTHESnmfQ==" crossorigin="anonymous"></script>
+		<script type="text/javascript" charset="utf-8">
+		$(document).ready(function() {
+			var socket = io();     
+			socket.on("login_response", function(data, callback) {
+				if(data.error_code==1)
+					alert("无此用户信息");
+				else if(data.error_code==2)
+					alert("输入密码错误");
+			});
+		})
+		</script>
+	</head>
+	<body>
+		<div class="wrapper">
+			<div class="header">
+				<div class="top">
+					<div class="logo">
+						<img src="../static/images/biubiu.jpg" alt="biubiu" style="width: 200px;">
+					</div>
 
-<div class="wrapper">
-	<div class="header">
-		<div class="top">
-			<div class="logo">
-				<img src="../static/images/biubiu.jpg" alt="biubiu" style="width: 200px;">
-			</div>
-
-			<form class="form" method="post" action="http://127.0.0.1:5000/login" name="form_login">
-				<div class="input_field">
-					<input type="text" placeholder="用户名" class="input" name="username">
+					<form class="form" method="post" action="http://127.0.0.1:5000/login" name="form_login">
+						<div class="input_field">
+							<input type="text" placeholder="用户名" class="input" name="username">
+						</div>
+						<div class="input_field">
+							<input type="password" placeholder="密码" class="input" name="password">
+						</div>
+						<div class="btn">
+							<input type="submit" value="登录">
+						</div>
+					</form>
+					<div class="or">
+						<div class="line"></div>
+						<p>OR</p>
+						<div class="line"></div>
+					</div>
+					<div class="dif">
+						<div class="forgot">
+							<a href="#">忘记密码?</a>
+						</div>
+					</div>
 				</div>
-				<div class="input_field">
-					<input type="password" placeholder="密码" class="input" name="password">
-				</div>
-				<div class="btn">
-					<input type="submit" value="登录">
-				</div>
-			</form>
-			<div class="or">
-				<div class="line"></div>
-				<p>OR</p>
-				<div class="line"></div>
-			</div>
-			<div class="dif">
-				<div class="forgot">
-					<a href="#">忘记密码?</a>
+				<div class="signup">
+					<p>如果没有账户? <a href="http://127.0.0.1:5000/register">注册</a></p>
 				</div>
 			</div>
 		</div>
-		<div class="signup">
-			<p>如果没有账户? <a href="http://127.0.0.1:5000/register">注册</a></p>
-		</div>
-	</div>
-</div>
 
-</body>
+	</body>
 </html>
