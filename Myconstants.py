@@ -28,16 +28,17 @@ D_CONTENT = "danmakuContent"
 D_TIMEAXIS = "danmakuTimeAxis"
 D_USER = "danmakuUser"
 
+
 TABLE_VIDEO_INFO = "videoinfo"
 PRIMARY_KEY_VIDEO_INFO = ["videoUrl"]
 VIDEO_INFO = {
     "videoUrl": "varchar(100)",
     "videoGraph": "varchar(100)",
-    "videoLength": "int unsigned"
+    "videoName": "varchar(100)"
 }
 VIDEO_URL = "videoUrl"
 VIDEO_GRAPH = "videoGraph"
-VIDEO_LENGTH = "videoLength"
+VIDEO_NAME = "videoName"
 
 
 
