@@ -54,8 +54,53 @@
 
 1. `name`登录者的用户名 ，登录者的用户名在`login.html`的`<form>`标签下
 
+-----------------
+### 建立后台管理界面
+
+1.弹幕管理页面  
+> 文件:plane.html  
+> 路由设置:`@app.route('/plane')`  
+> 接收的数据类型：List（列表）；
+> 接收相应变量名：plane；
+> 想更具体一些的话，对应HTML代码如下：
+```html 
+{% for planes in plane %}
+<tr data-index="0">
+    <td style="text-align: center; vertical-align: middle; ">{{plane[0]}}</td>
+    <td style="vertical-align: middle; ">{{plane[1]}}</td>
+    <td style="text-align: center; ">{{plane[2]}}</td>
+    <td style="text-align: center; ">{{plane[3]}}</td>
+    <td style="text-align: center; ">{{plane[4]}}</td>
+    <td style="text-align: center; ">{{plane[5]}}</td>
+    <td style="text-align: center; ">
+        <button button="#" mce_href="#" onclick="....">删除</button>
+    </td>
+</tr>
+{% endfor %}`
+```
+
+>列表含义对应如下:
+>plane[0]：编号  
+>plane[1]: 弹幕  
+>plane[2]：用户  
+>plane[3]: 发送时间  
+>plane[4]：视频（名称/编号）  
+>plane[5]: 备注  
+
+2.用户管理页面
+
+> 文件:user.html  
+> 路由设置:`@app.route('/user')`  
+> 接收的数据类型：List（列表）；
+> 接收相应变量名：user；
+> 代码与plane.html相似
 
 
+>列表含义对应如下:
+>plane[0]：编号  
+>plane[1]: 用户名  
+>plane[2]：专属ID  
+>plane[3]: 备注  
 
 -----------------------
 
