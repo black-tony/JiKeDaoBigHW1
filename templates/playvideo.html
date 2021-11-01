@@ -57,9 +57,7 @@
 </div>
 
 <!--播放界面-->
-<div class="video_title">
-    <p>离谱了：1000块一根炸虾 吃起来会是什么味道</p>
-</div>
+<div class="video_title" id="title"></div>
 
 <div id="danmup" style="left: 50%;margin-left:-700px;top:30px;margin-bottom: 400px;"></div>
 <div style="display: none">
@@ -83,12 +81,12 @@
 
 <script>
 
-  $(function(){
-    var name = $.query.get("name");
-    $("#name").text(name);
-  });
+    var video_url = $.query.get("video_url");
+    var video_name= $.query.get("video_name");
+    document.getElementById("title").innerHTML= video_name;
+
   $("#danmup").DanmuPlayer({    
-    src:name,
+    src:video_url,
     height: "680px", //区域的高度
     width: "1100px" //区域的宽度
     ,urlToGetDanmu:"query.php"
