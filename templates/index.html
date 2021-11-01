@@ -3,82 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>biubiu～(∠・ω< )⌒★ Hello~~</title>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous">
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js" integrity="sha512-aMGMvNYu8Ue4G+fHa359jcPb1u+ytAF+P2SCb+PxrjCdO3n3ZTxJ30zuH39rimUggmTwmh2u7wvQsDTHESnmfQ==" crossorigin="anonymous">
-    </script>
-
-    <script type="text/javascript" charset="utf-8">
-    $(document).ready(function() {
-
-    var namespace = '/testSocket';
-    var socket = io.connect('http://127.0.0.1:5000/testSocket');
-
-    /*此处获取视频条数*/
-    socket.on("get_video_nums", function(data, callback) {
-        document.getElementById("animation").innerHTML="<span>动画</span><div class='num'><span>"+
-        data.num[0]+"</span></div>";
-        document.getElementById("music").innerHTML="<span>音乐</span><div class='num'><span>"+
-        data.num[1]+"</span></div>";
-        document.getElementById("dance").innerHTML="<span>舞蹈</span><div class='num'><span>"+
-        data.num[2]+"</span></div>";
-        document.getElementById("technology").innerHTML="<span>科技</span><div class='num'><span>"+
-        data.num[3]+"</span></div>";
-        document.getElementById("life").innerHTML="<span>生活</span><div class='num'><span>"+
-        data.num[4]+"</span></div>";
-        document.getElementById("movie").innerHTML="<span>电影</span><div class='num'><span>"+
-        data.num[5]+"</span></div>";
-        if(callback)
-            callback();
-    });
-
-
-    /*此处获取指定条数的动画信息*/
-    socket.on('connect', function() {
-                socket.emit('get_animation_',{need_video_nums: 6});
-            });
-
-    socket.on("get_animation", function(data, callback) {
-    /*首先分两条给推荐栏*/
-    document.getElementById("anima_v1").innerHTML="<img src="+data.videoInfos[0].videoGraph+"><div class='info-card'><p>"+data.videoInfos[0].videoName+"</p><p class='info'></p></div>"
-    $(function(){
-        name = data.videoInfos[0].videoUrl;
-        $("#anima_v1").on("click",function(){
-            url = "playvideo.html?name="+name;//此处拼接内容
-            window.location.href = url;
-        });
-    });
-
-    document.getElementById("anima_v2").innerHTML="<img src="+data.videoInfos[1].videoGraph+"><div class='info-card'><p>"+data.videoInfos[1].videoName+"</p><p class='info'></p></div>"
-    $(function(){
-        name = data.videoInfos[1].videoUrl;
-        $("#anima_v2").on("click",function(){
-            url = "playvideo.html?name="+name;//此处拼接内容
-            window.location.href = url;
-        });
-    });
-
-    /*将此6条放入动画栏*/
-    for(var i=1;i<=6;i++){
-        document.getElementById("anima_v2").innerHTML="<img src="+data.videoInfos[1].videoGraph+"><div class='info-card'><p>"+data.videoInfos[1].videoName+"</p><p class='info'></p></div>"
-        $(function(){
-            name = data.videoInfos[1].videoUrl;
-            $("#anima_v2").on("click",function(){
-                url = "playvideo.html?name="+name;//此处拼接内容
-                window.location.href = url;
-            });
-        });
-    }
-    if(callback)
-        callback();
-
-    });
-
-
-
-    }
-    </script>
     <link rel="stylesheet" href="../static/css/index_column.css">
     <link rel="stylesheet" href="../static/css/index_header.css">
     <link rel="stylesheet" href="../static/css/index_recommend.css">
@@ -119,9 +43,9 @@
             <div class="rec-item"><a target='_blank' id="dance_v1"></a></div>
             <div class="rec-item"><a target='_blank' id="technology_v1"></a></div>
             <div class="rec-item"><a target='_blank' id="life_v1"></a></div>
+            <div class="rec-item"><a target='_blank' id="movie_v1"></a></div>            
             <div class="rec-item"><a target='_blank' id="anima_v2"></a></div>
             <div class="rec-item"><a target='_blank' id="music_v2"></a></div>
-            <div class="rec-item"><a target='_blank' id="dance_v2"></a></div>
         </div>
     </div>
 
@@ -132,66 +56,17 @@
     <div class="column">
         <div class="column-left">
             <div class="column-title">动画专栏 / Animation column</div>
-            柯南剧场版新万圣节海报,警察学校五人组变装亮相
-            <a href="#" target="_blank" alt="">
+            柯南剧场版新万圣节海报,警察学校五人组变装亮相；《海贼王》1030话情报：罗、基德VS大妈，新能力觉醒
+            <a href="http://127.0.0.1:5000/animation" target="_blank" alt="">
                 <div class="findmore">>查看更多( °◇ °)</div>
             </a>
-            <div class="column-ct">
-
-                
-                <div class="item a-hover">
-                    <a id="xx" target="_blank">
-                        <div class="pic">
-                            <img src="../static/images/anime/anime-2.webp" alt="">
-                        </div>
-                        <p class="a-hover">【综漫 ASMV】 弱者（完整版）/The Weak (Full ver.)</p>
-                    </a>
-                </div>
-
-
-              
-
-                <div class="item a-hover">
-                    <a id="xx" href="#" target="_blank">
-                        <div class="pic">
-                            <img src="../static/images/anime/anime-2.webp" alt="">
-                        </div>
-                        <p class="a-hover">【一拳超人】【全程同步高燃混剪】琦玉老师打爆宇宙！</p>
-                    </a>
-                </div>
-
-                <div class="item a-hover">
-                    <a href="#" target="_blank">
-                        <div class="pic">
-                            <img src="../static/images/anime/anime-3.webp" alt="">
-                        </div>
-                        <p class="a-hover">【著作权科普】谈夏达与夏天岛版权之争</p>
-                    </a>
-                </div>
-                <div class="item a-hover">
-                    <a href="#" target="_blank">
-                        <div class="pic">
-                            <img src="../static/images/anime/anime-4.webp" alt="">
-                        </div>
-                        <p class="a-hover">【泛式】英雄学院: 轰vs绿谷——「焦冻·原点」</p>
-                    </a>
-                </div>
-                <div class="item a-hover">
-                    <a href="#" target="_blank">
-                        <div class="pic">
-                            <img src="../static/images/anime/anime-5.webp" alt="">
-                        </div>
-                        <p class="a-hover">【怀旧排名】十年前天朝网络上最风靡的动画Top30</p>
-                    </a>
-                </div>
-                <div class="item a-hover">
-                    <a href="#" target="_blank">
-                        <div class="pic">
-                            <img src="../static/images/anime/anime-6.webp" alt="">
-                        </div>
-                        <p class="a-hover">【高考应援】新海诚cross road唯美短片祝君顺利！</p>
-                    </a>
-                </div>
+            <div class="column-ct">    
+                <div class="item a-hover"><a id="anima_vd1" target="_blank"></a></div>
+                <div class="item a-hover"><a id="anima_vd2" target="_blank"></a></div>
+                <div class="item a-hover"><a id="anima_vd3" target="_blank"></a></div>
+                <div class="item a-hover"><a id="anima_vd4" target="_blank"></a></div>
+                <div class="item a-hover"><a id="anima_vd5" target="_blank"></a></div>
+                <div class="item a-hover"><a id="anima_vd6" target="_blank"></a></div>
             </div>
         </div>
     </div>
@@ -202,60 +77,18 @@
     <!--音乐-->
     <div class="column">
         <div class="column-left">
-            <div class="column-title">音乐专栏</div>
-            アナログからデジタルまで、すべての「作ってみた」を応援しています
-            <a href="#" target="_blank" alt="">
+            <div class="column-title">音乐专栏 / Music column</div>
+            维也纳交响乐团迎首位华人指挥家；女高音返场演出，中国学生高歌“救场”
+            <a href="http://127.0.0.1:5000/music" target="_blank" alt="">
                 <div class="findmore">>查看更多( °◇ °)</div>
             </a>
             <div class="column-ct">
-                <div class="item a-hover">
-                    <a href="#" target="_blank">
-                        <div class="pic">
-                            <img src="../static/images/anime/anime-2.webp" alt="">
-                        </div>
-                        <p class="a-hover">【综漫 ASMV】 弱者（完整版）/The Weak (Full ver.)</p>
-                    </a>
-                </div>
-                <div class="item a-hover">
-                    <a href="#" target="_blank">
-                        <div class="pic">
-                            <img src="../static/images/anime/anime-2.webp" alt="">
-                        </div>
-                        <p class="a-hover">【一拳超人】【全程同步高燃混剪】琦玉老师打爆宇宙！</p>
-                    </a>
-                </div>
-                <div class="item a-hover">
-                    <a href="#" target="_blank">
-                        <div class="pic">
-                            <img src="../static/images/anime/anime-3.webp" alt="">
-                        </div>
-                        <p class="a-hover">【著作权科普】谈夏达与夏天岛版权之争</p>
-                    </a>
-                </div>
-                <div class="item a-hover">
-                    <a href="#" target="_blank">
-                        <div class="pic">
-                            <img src="../static/images/anime/anime-4.webp" alt="">
-                        </div>
-                        <p class="a-hover">【泛式】英雄学院: 轰vs绿谷——「焦冻·原点」</p>
-                    </a>
-                </div>
-                <div class="item a-hover">
-                    <a href="#" target="_blank">
-                        <div class="pic">
-                            <img src="../static/images/anime/anime-5.webp" alt="">
-                        </div>
-                        <p class="a-hover">【怀旧排名】十年前天朝网络上最风靡的动画Top30</p>
-                    </a>
-                </div>
-                <div class="item a-hover">
-                    <a href="#" target="_blank">
-                        <div class="pic">
-                            <img src="../static/images/anime/anime-6.webp" alt="">
-                        </div>
-                        <p class="a-hover">【高考应援】新海诚cross road唯美短片祝君顺利！</p>
-                    </a>
-                </div>
+                <div class="item a-hover"><a id="music_vd1" target="_blank"></a></div>
+                <div class="item a-hover"><a id="music_vd2" target="_blank"></a></div>
+                <div class="item a-hover"><a id="music_vd3" target="_blank"></a></div>
+                <div class="item a-hover"><a id="music_vd4" target="_blank"></a></div>
+                <div class="item a-hover"><a id="music_vd5" target="_blank"></a></div>
+                <div class="item a-hover"><a id="music_vd6" target="_blank"></a></div>
             </div>
         </div>
     </div>
@@ -266,60 +99,18 @@
     <!--舞蹈-->
     <div class="column">
         <div class="column-left">
-            <div class="column-title">舞蹈专栏</div>
-            アナログからデジタルまで、すべての「作ってみた」を応援しています
-            <a href="#" target="_blank" alt="">
+            <div class="column-title">舞蹈专栏 / Dance column</div>
+            跺月亮——走进山村孩子课堂的原生态舞蹈；63个舞蹈作品同台竞技，决战2021年四川省舞蹈新作比赛
+            <a href="http://127.0.0.1:5000/dance" target="_blank" alt="">
                 <div class="findmore">>查看更多( °◇ °)</div>
             </a>
             <div class="column-ct">
-                <div class="item a-hover">
-                    <a href="#" target="_blank">
-                        <div class="pic">
-                            <img src="./src/images/anime/anime-2.webp" alt="">
-                        </div>
-                        <p class="a-hover">【综漫 ASMV】 弱者（完整版）/The Weak (Full ver.)</p>
-                    </a>
-                </div>
-                <div class="item a-hover">
-                    <a href="#" target="_blank">
-                        <div class="pic">
-                            <img src="./src/images/anime/anime-2.webp" alt="">
-                        </div>
-                        <p class="a-hover">【一拳超人】【全程同步高燃混剪】琦玉老师打爆宇宙！</p>
-                    </a>
-                </div>
-                <div class="item a-hover">
-                    <a href="#" target="_blank">
-                        <div class="pic">
-                            <img src="./src/images/anime/anime-3.webp" alt="">
-                        </div>
-                        <p class="a-hover">【著作权科普】谈夏达与夏天岛版权之争</p>
-                    </a>
-                </div>
-                <div class="item a-hover">
-                    <a href="#" target="_blank">
-                        <div class="pic">
-                            <img src="./src/images/anime/anime-4.webp" alt="">
-                        </div>
-                        <p class="a-hover">【泛式】英雄学院: 轰vs绿谷——「焦冻·原点」</p>
-                    </a>
-                </div>
-                <div class="item a-hover">
-                    <a href="#" target="_blank">
-                        <div class="pic">
-                            <img src="./src/images/anime/anime-5.webp" alt="">
-                        </div>
-                        <p class="a-hover">【怀旧排名】十年前天朝网络上最风靡的动画Top30</p>
-                    </a>
-                </div>
-                <div class="item a-hover">
-                    <a href="#" target="_blank">
-                        <div class="pic">
-                            <img src="./src/images/anime/anime-6.webp" alt="">
-                        </div>
-                        <p class="a-hover">【高考应援】新海诚cross road唯美短片祝君顺利！</p>
-                    </a>
-                </div>
+                <div class="item a-hover"><a id="dance_vd1" target="_blank"></a></div>
+                <div class="item a-hover"><a id="dance_vd2" target="_blank"></a></div>
+                <div class="item a-hover"><a id="dance_vd3" target="_blank"></a></div>
+                <div class="item a-hover"><a id="dance_vd4" target="_blank"></a></div>
+                <div class="item a-hover"><a id="dance_vd5" target="_blank"></a></div>
+                <div class="item a-hover"><a id="dance_vd6" target="_blank"></a></div>
             </div>
         </div>
     </div>
@@ -330,60 +121,18 @@
     <!--科技-->
     <div class="column">
         <div class="column-left">
-            <div class="column-title">科技专栏</div>
-            アナログからデジタルまで、すべての「作ってみた」を応援しています
-            <a href="#" target="_blank" alt="">
+            <div class="column-title">科技专栏 / Technology column</div>
+            数字招采赋能企业供应链升级,中国数字建筑峰会2021·上海站圆满成功
+            <a href="http://127.0.0.1:5000/technology" target="_blank" alt="">
                 <div class="findmore">>查看更多( °◇ °)</div>
             </a>
             <div class="column-ct">
-                <div class="item a-hover">
-                    <a href="#" target="_blank">
-                        <div class="pic">
-                            <img src="./src/images/anime/anime-2.webp" alt="">
-                        </div>
-                        <p class="a-hover">【综漫 ASMV】 弱者（完整版）/The Weak (Full ver.)</p>
-                    </a>
-                </div>
-                <div class="item a-hover">
-                    <a href="play_video?video_url=aaa&video_name=asdsa" target="_blank">
-                        <div class="pic">
-                            <img src="./src/images/anime/anime-2.webp" alt="">
-                        </div>
-                        <p class="a-hover">【一拳超人】【全程同步高燃混剪】琦玉老师打爆宇宙！</p>
-                    </a>
-                </div>
-                <div class="item a-hover">
-                    <a href="#" target="_blank">
-                        <div class="pic">
-                            <img src="./src/images/anime/anime-3.webp" alt="">
-                        </div>
-                        <p class="a-hover">【著作权科普】谈夏达与夏天岛版权之争</p>
-                    </a>
-                </div>
-                <div class="item a-hover">
-                    <a href="#" target="_blank">
-                        <div class="pic">
-                            <img src="./src/images/anime/anime-4.webp" alt="">
-                        </div>
-                        <p class="a-hover">【泛式】英雄学院: 轰vs绿谷——「焦冻·原点」</p>
-                    </a>
-                </div>
-                <div class="item a-hover">
-                    <a href="#" target="_blank">
-                        <div class="pic">
-                            <img src="./src/images/anime/anime-5.webp" alt="">
-                        </div>
-                        <p class="a-hover">【怀旧排名】十年前天朝网络上最风靡的动画Top30</p>
-                    </a>
-                </div>
-                <div class="item a-hover">
-                    <a href="#" target="_blank">
-                        <div class="pic">
-                            <img src="./src/images/anime/anime-6.webp" alt="">
-                        </div>
-                        <p class="a-hover">【高考应援】新海诚cross road唯美短片祝君顺利！</p>
-                    </a>
-                </div>
+                <div class="item a-hover"><a id="techn_vd1" target="_blank"></a></div>
+                <div class="item a-hover"><a id="techn_vd2" target="_blank"></a></div>
+                <div class="item a-hover"><a id="techn_vd3" target="_blank"></a></div>
+                <div class="item a-hover"><a id="techn_vd4" target="_blank"></a></div>
+                <div class="item a-hover"><a id="techn_vd5" target="_blank"></a></div>
+                <div class="item a-hover"><a id="techn_vd6" target="_blank"></a></div>
             </div>
         </div>
     </div>
@@ -395,59 +144,17 @@
     <div class="column">
         <div class="column-left">
             <div class="column-title">生活专栏</div>
-            アナログからデジタルまで、すべての「作ってみた」を応援しています
-            <a href="#" target="_blank" alt="">
+            四川一大学生化“虚弱妆”走红网络，网友：治好了食堂阿姨手抖症
+            <a href="http://127.0.0.1:5000/life" target="_blank" alt="">
                 <div class="findmore">>查看更多( °◇ °)</div>
             </a>
             <div class="column-ct">
-                <div class="item a-hover">
-                    <a href="#" target="_blank">
-                        <div class="pic">
-                            <img src="./src/images/anime/anime-2.webp" alt="">
-                        </div>
-                        <p class="a-hover">【综漫 ASMV】 弱者（完整版）/The Weak (Full ver.)</p>
-                    </a>
-                </div>
-                <div class="item a-hover">
-                    <a href="#" target="_blank">
-                        <div class="pic">
-                            <img src="./src/images/anime/anime-2.webp" alt="">
-                        </div>
-                        <p class="a-hover">【一拳超人】【全程同步高燃混剪】琦玉老师打爆宇宙！</p>
-                    </a>
-                </div>
-                <div class="item a-hover">
-                    <a href="#" target="_blank">
-                        <div class="pic">
-                            <img src="./src/images/anime/anime-3.webp" alt="">
-                        </div>
-                        <p class="a-hover">【著作权科普】谈夏达与夏天岛版权之争</p>
-                    </a>
-                </div>
-                <div class="item a-hover">
-                    <a href="#" target="_blank">
-                        <div class="pic">
-                            <img src="./src/images/anime/anime-4.webp" alt="">
-                        </div>
-                        <p class="a-hover">【泛式】英雄学院: 轰vs绿谷——「焦冻·原点」</p>
-                    </a>
-                </div>
-                <div class="item a-hover">
-                    <a href="#" target="_blank">
-                        <div class="pic">
-                            <img src="./src/images/anime/anime-5.webp" alt="">
-                        </div>
-                        <p class="a-hover">【怀旧排名】十年前天朝网络上最风靡的动画Top30</p>
-                    </a>
-                </div>
-                <div class="item a-hover">
-                    <a href="#" target="_blank">
-                        <div class="pic">
-                            <img src="./src/images/anime/anime-6.webp" alt="">
-                        </div>
-                        <p class="a-hover">【高考应援】新海诚cross road唯美短片祝君顺利！</p>
-                    </a>
-                </div>
+                <div class="item a-hover"><a id="life_vd1" target="_blank"></a></div>
+                <div class="item a-hover"><a id="life_vd2" target="_blank"></a></div>
+                <div class="item a-hover"><a id="life_vd3" target="_blank"></a></div>
+                <div class="item a-hover"><a id="life_vd4" target="_blank"></a></div>
+                <div class="item a-hover"><a id="life_vd5" target="_blank"></a></div>
+                <div class="item a-hover"><a id="life_vd6" target="_blank"></a></div>
             </div>
         </div>
     </div>
@@ -459,93 +166,285 @@
     <div class="column">
         <div class="column-left">
             <div class="column-title">电影专栏</div>
-            アナログからデジタルまで、すべての「作ってみた」を応援しています
-            <a href="#" target="_blank" alt="">
+            《长津湖2》将来袭，惨烈的“三炸水门桥”，这才是真正的重头戏
+            <a href="http://127.0.0.1:5000/movie" target="_blank" alt="">
                 <div class="findmore">>查看更多( °◇ °)</div>
             </a>
             <div class="column-ct">
-                <div class="item a-hover">
-                    <a href="#" target="_blank">
-                        <div class="pic">
-                            <img src="./src/images/anime/anime-2.webp" alt="">
-                        </div>
-                        <p class="a-hover">【综漫 ASMV】 弱者（完整版）/The Weak (Full ver.)</p>
-                    </a>
-                </div>
-                <div class="item a-hover">
-                    <a href="#" target="_blank">
-                        <div class="pic">
-                            <img src="./src/images/anime/anime-2.webp" alt="">
-                        </div>
-                        <p class="a-hover">【一拳超人】【全程同步高燃混剪】琦玉老师打爆宇宙！</p>
-                    </a>
-                </div>
-                <div class="item a-hover">
-                    <a href="#" target="_blank">
-                        <div class="pic">
-                            <img src="./src/images/anime/anime-3.webp" alt="">
-                        </div>
-                        <p class="a-hover">【著作权科普】谈夏达与夏天岛版权之争</p>
-                    </a>
-                </div>
-                <div class="item a-hover">
-                    <a href="#" target="_blank">
-                        <div class="pic">
-                            <img src="./src/images/anime/anime-4.webp" alt="">
-                        </div>
-                        <p class="a-hover">【泛式】英雄学院: 轰vs绿谷——「焦冻·原点」</p>
-                    </a>
-                </div>
-                <div class="item a-hover">
-                    <a href="#" target="_blank">
-                        <div class="pic">
-                            <img src="./src/images/anime/anime-5.webp" alt="">
-                        </div>
-                        <p class="a-hover">【怀旧排名】十年前天朝网络上最风靡的动画Top30</p>
-                    </a>
-                </div>
-                <div class="item a-hover">
-                    <a href="#" target="_blank">
-                        <div class="pic">
-                            <img src="./src/images/anime/anime-6.webp" alt="">
-                        </div>
-                        <p class="a-hover">【高考应援】新海诚cross road唯美短片祝君顺利！</p>
-                    </a>
-                </div>
+                <div class="item a-hover"><a id="movie_vd1" target="_blank"></a></div>
+                <div class="item a-hover"><a id="movie_vd2" target="_blank"></a></div>
+                <div class="item a-hover"><a id="movie_vd3" target="_blank"></a></div>
+                <div class="item a-hover"><a id="movie_vd4" target="_blank"></a></div>
+                <div class="item a-hover"><a id="movie_vd5" target="_blank"></a></div>
+                <div class="item a-hover"><a id="movie_vd6" target="_blank"></a></div>
             </div>
         </div>
     </div>
-</div>
-</body>
 
+</body>
+    
+    <script src="../static/js/jquery.min.js"></script>
+    <script src="../static/js/jquery.params.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js" integrity="sha512-aMGMvNYu8Ue4G+fHa359jcPb1u+ytAF+P2SCb+PxrjCdO3n3ZTxJ30zuH39rimUggmTwmh2u7wvQsDTHESnmfQ==" crossorigin="anonymous">
+    </script>
+
+    <script type="text/javascript" charset="utf-8">
+    $(document).ready(function() {
+    var socket = io();
+    
+    /*此处获取视频条数*/
+    socket.on("get_video_nums", function(data, callback) { 
+        document.getElementById("animation").innerHTML="<span>动画</span><div class='num'><span>"+
+        data.num[0]+"</span></div>";
+        document.getElementById("music").innerHTML="<span>音乐</span><div class='num'><span>"+
+        data.num[1]+"</span></div>";
+        document.getElementById("dance").innerHTML="<span>舞蹈</span><div class='num'><span>"+
+        data.num[2]+"</span></div>";
+        document.getElementById("technology").innerHTML="<span>科技</span><div class='num'><span>"+
+        data.num[3]+"</span></div>";
+        document.getElementById("life").innerHTML="<span>生活</span><div class='num'><span>"+
+        data.num[4]+"</span></div>";
+        document.getElementById("movie").innerHTML="<span>电影</span><div class='num'><span>"+
+        data.num[5]+"</span></div>";
+    });
+    
+
+    /*此处获取指定条数的动画信息*/
+    socket.emit('get_animation',{need_video_nums: 6});
+    socket.on("get_animation", function(data, callback) { 
+    /*首先分两条给推荐栏*/
+    document.getElementById("anima_v1").innerHTML="<img src="+data.videoInfos[0].videoGraph+"><div class='info-card'><p>"+
+    data.videoInfos[0].videoName+"</p><p class='info'></p></div>";
+    $(function(){
+        video_url = data.videoInfos[0].videoUrl;
+        video_name = data.videoInfos[0].videoName;
+        $("#anima_v1").on("click",function(){
+            url = "play_video?video_url="+video_url+"&video_name="+video_name;//此处拼接内容
+            window.location.href = url;
+        });
+    });   
+
+    document.getElementById("anima_v2").innerHTML="<img src="+data.videoInfos[1].videoGraph+"><div class='info-card'><p>"+
+    data.videoInfos[1].videoName+"</p><p class='info'></p></div>";
+    $(function(){
+        video_url = data.videoInfos[1].videoUrl;
+        video_name = data.videoInfos[1].videoName;
+        $("#anima_v2").on("click",function(){
+            url = "play_video?video_url="+video_url+"&video_name="+video_name;//此处拼接内容
+            window.location.href = url;
+        });
+    }); 
+  
+    /*将此6条放入动画栏*/
+    for(var i=0;i<6;i++){
+        (function(i){
+        document.getElementById("anima_vd"+(i+1)).innerHTML= "<div class='pic'><img src="+data.videoInfos[i].videoGraph+"></div><p class='a-hover'>"+data.videoInfos[i].videoName+"</p>";
+        var tmp="#anima_vd"+(i+1);
+        $(function(){
+            video_url = data.videoInfos[i].videoUrl;
+            video_name = data.videoInfos[i].videoName;
+            $(tmp).on("click",function(){
+                url = "play_video?video_url="+video_url+"&video_name="+video_name;//此处拼接内容
+                window.location.href = url;});
+        }); 
+        })(i)
+    }
+    });
+
+
+    /*获取指定条数音乐视频*/
+    socket.emit('get_music',{need_video_nums: 6});
+    socket.on("get_music", function(data, callback) { 
+    /*首先分两条给推荐栏*/
+    document.getElementById("music_v1").innerHTML="<img src="+data.videoInfos[0].videoGraph+"><div class='info-card'><p>"+
+    data.videoInfos[0].videoName+"</p><p class='info'></p></div>";
+    $(function(){
+        video_url = data.videoInfos[0].videoUrl;
+        video_name = data.videoInfos[0].videoName;
+        $("#music_v1").on("click",function(){
+            url = "play_video?video_url="+video_url+"&video_name="+video_name;//此处拼接内容
+            window.location.href = url;
+        });
+    });   
+
+    document.getElementById("music_v2").innerHTML="<img src="+data.videoInfos[1].videoGraph+"><div class='info-card'><p>"+
+    data.videoInfos[1].videoName+"</p><p class='info'></p></div>";
+    $(function(){
+        video_url = data.videoInfos[1].videoUrl;
+        video_name = data.videoInfos[1].videoName;
+        $("#music_v2").on("click",function(){
+            url = "play_video?video_url="+video_url+"&video_name="+video_name;//此处拼接内容
+            window.location.href = url;
+        });
+    }); 
+  
+    /*将此6条放入音乐栏*/
+    for(var i=0;i<6;i++){
+        (function(i){
+        document.getElementById("music_vd"+(i+1)).innerHTML= "<div class='pic'><img src="+data.videoInfos[i].videoGraph+"></div><p class='a-hover'>"+data.videoInfos[i].videoName+"</p>";
+        var tmp="#music_vd"+(i+1);
+        $(function(){
+            video_url = data.videoInfos[i].videoUrl;
+            video_name = data.videoInfos[i].videoName;
+            $(tmp).on("click",function(){
+                url = "play_video?video_url="+video_url+"&video_name="+video_name;//此处拼接内容
+                window.location.href = url;});
+        }); 
+        })(i)
+    }
+    });
+
+
+    /*获取指定条数舞蹈视频*/
+    socket.emit('get_dance',{need_video_nums: 6});
+    socket.on("get_dance", function(data, callback) { 
+    /*首先分一条给推荐栏*/
+    document.getElementById("dance_v1").innerHTML="<img src="+data.videoInfos[0].videoGraph+"><div class='info-card'><p>"+
+    data.videoInfos[0].videoName+"</p><p class='info'></p></div>";
+    $(function(){
+        video_url = data.videoInfos[0].videoUrl;
+        video_name = data.videoInfos[0].videoName;
+        $("#dance_v1").on("click",function(){
+            url = "play_video?video_url="+video_url+"&video_name="+video_name;//此处拼接内容
+            window.location.href = url;
+        });
+    });   
+ 
+  
+    /*将此6条放入舞蹈栏*/
+    for(var i=0;i<6;i++){
+        (function(i){
+        document.getElementById("dance_vd"+(i+1)).innerHTML= "<div class='pic'><img src="+data.videoInfos[i].videoGraph+"></div><p class='a-hover'>"+data.videoInfos[i].videoName+"</p>";
+        var tmp="#dance_vd"+(i+1);
+        $(function(){
+            video_url = data.videoInfos[i].videoUrl;
+            video_name = data.videoInfos[i].videoName;
+            $(tmp).on("click",function(){
+                url = "play_video?video_url="+video_url+"&video_name="+video_name;//此处拼接内容
+                window.location.href = url;});
+        }); 
+        })(i)
+    }
+    });
+
+
+    /*获取指定条数科技视频*/
+    socket.emit('get_technology',{need_video_nums: 6});
+    socket.on("get_technology", function(data, callback) { 
+    /*首先分一条给推荐栏*/
+    document.getElementById("technology_v1").innerHTML="<img src="+data.videoInfos[0].videoGraph+"><div class='info-card'><p>"+
+    data.videoInfos[0].videoName+"</p><p class='info'></p></div>";
+    $(function(){
+        video_url = data.videoInfos[0].videoUrl;
+        video_name = data.videoInfos[0].videoName;
+        $("#technology_v1").on("click",function(){
+            url = "play_video?video_url="+video_url+"&video_name="+video_name;//此处拼接内容
+            window.location.href = url;
+        });
+    });   
+  
+    /*将此6条放入科技栏*/
+    for(var i=0;i<6;i++){
+        (function(i){
+        document.getElementById("techn_vd"+(i+1)).innerHTML= "<div class='pic'><img src="+data.videoInfos[i].videoGraph+"></div><p class='a-hover'>"+data.videoInfos[i].videoName+"</p>";
+        var tmp="#techn_vd"+(i+1);
+        $(function(){
+            video_url = data.videoInfos[i].videoUrl;
+            video_name = data.videoInfos[i].videoName;
+            $(tmp).on("click",function(){
+                url = "play_video?video_url="+video_url+"&video_name="+video_name;//此处拼接内容
+                window.location.href = url;});
+        }); 
+        })(i)
+    }
+    });
+
+
+    /*获取指定条数生活视频*/
+    socket.emit('get_life',{need_video_nums: 6});
+    socket.on("get_life", function(data, callback) { 
+    /*首先分一条给推荐栏*/
+    document.getElementById("life_v1").innerHTML="<img src="+data.videoInfos[0].videoGraph+"><div class='info-card'><p>"+
+    data.videoInfos[0].videoName+"</p><p class='info'></p></div>";
+    $(function(){
+        video_url = data.videoInfos[0].videoUrl;
+        video_name = data.videoInfos[0].videoName;
+        $("#life_v1").on("click",function(){
+            url = "play_video?video_url="+video_url+"&video_name="+video_name;//此处拼接内容
+            window.location.href = url;
+        });
+    });   
+  
+    /*将此6条放入生活栏*/
+    for(var i=0;i<6;i++){
+        (function(i){
+        document.getElementById("life_vd"+(i+1)).innerHTML= "<div class='pic'><img src="+data.videoInfos[i].videoGraph+"></div><p class='a-hover'>"+data.videoInfos[i].videoName+"</p>";
+        var tmp="#life_vd"+(i+1);
+        $(function(){
+            video_url = data.videoInfos[i].videoUrl;
+            video_name = data.videoInfos[i].videoName;
+            $(tmp).on("click",function(){
+                url = "play_video?video_url="+video_url+"&video_name="+video_name;//此处拼接内容
+                window.location.href = url;});
+        }); 
+        })(i)
+    }
+    });
+
+
+    /*获取指定条数电影视频*/
+    socket.emit('get_movie',{need_video_nums: 6});
+    socket.on("get_movie", function(data, callback) { 
+    /*首先分一条给推荐栏*/
+    document.getElementById("movie_v1").innerHTML="<img src="+data.videoInfos[0].videoGraph+"><div class='info-card'><p>"+
+    data.videoInfos[0].videoName+"</p><p class='info'></p></div>";
+    $(function(){
+        video_url = data.videoInfos[0].videoUrl;
+        video_name = data.videoInfos[0].videoName;
+        $("#movie_v1").on("click",function(){
+            url = "play_video?video_url="+video_url+"&video_name="+video_name;//此处拼接内容
+            window.location.href = url;
+        });
+    });   
+
+  
+    /*将此6条放入电影栏*/
+    for(var i=0;i<6;i++){
+        (function(i){
+        document.getElementById("movie_vd"+(i+1)).innerHTML= "<div class='pic'><img src="+data.videoInfos[i].videoGraph+"></div><p class='a-hover'>"+data.videoInfos[i].videoName+"</p>";
+        var tmp="#movie_vd"+(i+1);
+        $(function(){
+            video_url = data.videoInfos[i].videoUrl;
+            video_name = data.videoInfos[i].videoName;
+            $(tmp).on("click",function(){
+                url = "play_video?video_url="+video_url+"&video_name="+video_name;//此处拼接内容
+                window.location.href = url;});
+        }); 
+        })(i)
+    }
+    });    
+
+})
+    </script>
+
+<!--test
+<script type="text/javascript">
+        for(var i=0;i<6;i++){
+        (function(i){
+        document.getElementById("anima_vd"+(i+1)).innerHTML= "<div class='pic'><img src="+"../static/images/toplog.png"+"></div><p class='a-hover'>"+"askdhaskdhasd"+"</p>";
+        var tmp="#anima_vd"+(i+1);
+        $(function(){
+            video_url = "http://vfx.mtime.cn/Video/2019/03/19/mp4/190319212559089721.mp4";
+            video_name = "askdhaskdhasd";
+            $(tmp).on("click",function(){
+                url = "playvideo.html?video_url="+video_url+"&video_name="+video_name;//此处拼接内容
+                window.location.href = url;});
+        }); 
+        })(i)
+    }
+</script>-->
 
 </html>
 
-
-                <div class="item a-hover">
-                    <a id="xx" target="_blank">
-                        <div class="pic">
-                            <img src="../static/images/anime/anime-2.webp" alt="">
-                        </div>
-                        <p class="a-hover">【综漫 ASMV】 弱者（完整版）/The Weak (Full ver.)</p>
-                    </a>
-                </div>
-
-
-
-
-
-
-        document.getElementsByClassName('top').innerHTML;
-        var re = "";
-        var tu = 1;
-        for (var i = 0; i < 4; i++) {
-            tu++;
-            re += '<div class="top">' +
-                '<img class="tu1" src="../pic/'+tu+'.jpg">' +
-                '</div>';
-        }
-        document.writeln(re);
-
-
-                            

@@ -5,9 +5,9 @@
     <title>biubiu～(∠・ω< )⌒★ Hello~~</title>
     <link rel="stylesheet" href="../static/css/index_header.css">
     <link rel="stylesheet" href="../static/css/playvideo.css">
-    <link href="../static/src/css/scojs.css" rel="stylesheet">
-    <link href="../static/src/css/colpick.css" rel="stylesheet">
-    <link href="../static/src/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="../static/src/css/scojs.css">
+    <link rel="stylesheet" href="../static/src/css/colpick.css">
+    <link rel="stylesheet" href="../static/src/css/bootstrap.css">
     <link rel="stylesheet" href="../static/src/css/main.css">
 </head>
 
@@ -17,49 +17,22 @@
         <div class="guide-wrapper">
             <ul class="nav clearfix">
                 <li>
-                    <a href="index.html">
+                    <a href="http://127.0.0.1:5000/index">
                     <span>首页</span><div class="num"><span>home</span></div>
                     </a>
                 </li>
-                <li>
-                    <a href="#">
-                    <span>动画</span><div class="num"><span>549</span></div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                    <span>音乐</span><div class="num"><span>999+</span></div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                    <span>舞蹈</span><div class="num"><span>157</span></div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                    <span>科技</span><div class="num"><span>831</span></div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                    <span>生活</span><div class="num"><span>999+</span></div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                    <span>电影</span><div class="num"><span>999+</span></div>
-                    </a>
-                </li>
+                <li><a href="http://127.0.0.1:5000/animation" id="animation"></a></li>
+                <li><a href="http://127.0.0.1:5000/music" id="music"></a></li>
+                <li><a href="http://127.0.0.1:5000/dance" id="dance"></a></li>
+                <li><a href="http://127.0.0.1:5000/technology" id="technology"></a></li>
+                <li><a href="http://127.0.0.1:5000/life" id="life"></a></li>
+                <li><a href="http://127.0.0.1:5000/movie" id="movie"></a></li>
             </ul>
         </div>
-
 </div>
 
 <!--播放界面-->
-<div class="video_title">
-    <p>离谱了：1000块一根炸虾 吃起来会是什么味道</p>
-</div>
+<div class="video_title" id="title"></div>
 
 <div id="danmup" style="left: 50%;margin-left:-700px;top:30px;margin-bottom: 400px;"></div>
 <div style="display: none">
@@ -83,16 +56,18 @@
 
 <script>
 
-  $(function(){
-    var name = $.query.get("name");
-    $("#name").text(name);
-  });
-  $("#danmup").DanmuPlayer({    
-    src:name,
+    //var video_url = $.query.get("video_url");
+    //var video_name= $.query.get("video_name");
+    //document.getElementById("title").innerHTML= video_name;
+    document.getElementById("title").innerHTML= "这才是大会员该看的视频";//测试
+
+  $("#danmup").DanmuPlayer({
+    src:"http://vfx.mtime.cn/Video/2019/03/18/mp4/190318231014076505.mp4",//测试
+    //src:video_url,
     height: "680px", //区域的高度
-    width: "1100px" //区域的宽度
-    ,urlToGetDanmu:"query.php"
-    ,urlToPostDanmu:"stone.php"
+    width: "1100px", //区域的宽度
+    urlToGetDanmu:"query.php",
+    urlToPostDanmu:"stone.php"
   });
 
 
@@ -102,7 +77,45 @@
     ,{ "text":"哈哈哈啊哈" ,color:"black",size:1,position:0,time:10}
     ,{ "text":"这是顶部弹幕" ,color:"yellow" ,size:1,position:1,time:3}
     ,{ "text":"这是底部弹幕" , color:"red" ,size:1,position:2,time:9}
-    ,{ "text":"大家好，我是伊藤橙" ,color:"orange",size:1,position:1,time:3}
+    ,{ "text":"大家好，我是伊藤橙" ,color:"orange",size:1,position:1,time:130}//130==13s
   ])
 </script>
+
+
+<script src="../static/js/jquery.min.js"></script>
+<script src="../static/js/jquery.params.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous">
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js" integrity="sha512-aMGMvNYu8Ue4G+fHa359jcPb1u+ytAF+P2SCb+PxrjCdO3n3ZTxJ30zuH39rimUggmTwmh2u7wvQsDTHESnmfQ==" crossorigin="anonymous">
+</script>
+
+<script type="text/javascript" charset="utf-8">
+$(document).ready(function() {
+var socket = io();
+    
+    /*此处获取视频条数*/
+    socket.on("get_video_nums", function(data, callback) { 
+        document.getElementById("animation").innerHTML="<span>动画</span><div class='num'><span>"+
+        data.num[0]+"</span></div>";
+        document.getElementById("music").innerHTML="<span>音乐</span><div class='num'><span>"+
+        data.num[1]+"</span></div>";
+        document.getElementById("dance").innerHTML="<span>舞蹈</span><div class='num'><span>"+
+        data.num[2]+"</span></div>";
+        document.getElementById("technology").innerHTML="<span>科技</span><div class='num'><span>"+
+        data.num[3]+"</span></div>";
+        document.getElementById("life").innerHTML="<span>生活</span><div class='num'><span>"+
+        data.num[4]+"</span></div>";
+        document.getElementById("movie").innerHTML="<span>电影</span><div class='num'><span>"+
+        data.num[5]+"</span></div>";
+    });
+    
+
+
+})
+</script>
+
+
+
+
+
 </html>

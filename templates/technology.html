@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>biubiu～(∠・ω< )⌒★ Hello~~</title>
+    <link rel="stylesheet" href="../static/css/index_column.css">
+    <link rel="stylesheet" href="../static/css/index_header.css">
+</head>
+
+<body>
+<div class="header">
+    <div class="nav-img"></div>
+        <div class="guide-wrapper">
+            <ul class="nav clearfix">
+                <li>
+                    <a href="http://127.0.0.1:5000/index">
+                    <span>首页</span><div class="num"><span>home</span></div>
+                    </a>
+                </li>
+                <li><a href="http://127.0.0.1:5000/animation" id="animation"></a></li>
+                <li><a href="http://127.0.0.1:5000/music" id="music"></a></li>
+                <li><a href="http://127.0.0.1:5000/dance" id="dance"></a></li>
+                <li><a href="http://127.0.0.1:5000/technology" id="technology"></a></li>
+                <li><a href="http://127.0.0.1:5000/life" id="life"></a></li>
+                <li><a href="http://127.0.0.1:5000/movie" id="movie"></a></li>
+            </ul>
+        </div>
+
+</div>
+
+
+<!--页面主体-->
+<div class="main-page">
+
+    <!--分割线-->
+    <div class="line_01"></div>
+ 
+    <div class="column">
+        <div class="column-left">
+            <div class="column-title">科技专栏 / Technology column</div>
+            </br>
+            <div class="column-ct" id="anicol">
+            </div>
+        </div>
+    </div>
+</body>
+
+    <script src="../static/js/jquery.min.js"></script>
+    <script src="../static/js/jquery.params.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js" integrity="sha512-aMGMvNYu8Ue4G+fHa359jcPb1u+ytAF+P2SCb+PxrjCdO3n3ZTxJ30zuH39rimUggmTwmh2u7wvQsDTHESnmfQ==" crossorigin="anonymous">
+    </script>
+
+    <script type="text/javascript" charset="utf-8">
+    $(document).ready(function() {
+    var socket = io();
+    
+    /*此处获取视频条数*/
+    socket.on("get_video_nums", function(data, callback) { 
+        document.getElementById("animation").innerHTML="<span>动画</span><div class='num'><span>"+
+        data.num[0]+"</span></div>";
+        document.getElementById("music").innerHTML="<span>音乐</span><div class='num'><span>"+
+        data.num[1]+"</span></div>";
+        document.getElementById("dance").innerHTML="<span>舞蹈</span><div class='num'><span>"+
+        data.num[2]+"</span></div>";
+        document.getElementById("technology").innerHTML="<span>科技</span><div class='num'><span>"+
+        data.num[3]+"</span></div>";
+        document.getElementById("life").innerHTML="<span>生活</span><div class='num'><span>"+
+        data.num[4]+"</span></div>";
+        document.getElementById("movie").innerHTML="<span>电影</span><div class='num'><span>"+
+        data.num[5]+"</span></div>";
+    });
+    
+    //若没有事先的socket.emit说明索取的视频条数，则get_technology表示获取科技类全部视频 
+    socket.on("get_technology", function(data, callback) { 
+
+    var ht="";
+    
+    for(var i=0;i<data.count;i++){ //data.count指的是所有科技类视频的数量
+        (function(i){
+        ht+="<div class='item a-hover'><a id='anima_vd"+(i+1)+"' target='_blank'><div class='pic'><img src="+
+        data.videoInfos[i].videoGraph+"></div><p class='a-hover'>"+data.videoInfos[i].videoName+"</p></a></div>"; 
+        })(i)
+    }
+
+    ht+="<i></i><i></i><i></i><i></i><i></i><i></i>"
+    document.getElementById("anicol").innerHTML=ht;
+
+    for(var i=0;i<data.count;i++){ 
+        (function(i){
+        var tmp="#anima_vd"+(i+1);
+        $(function(){
+            video_url = data.videoInfos[i].videoUrl;
+            video_name = data.videoInfos[i].videoName;
+            $(tmp).on("click",function(){
+                url = "play_video?video_url="+video_url+"&video_name="+video_name;//此处拼接内容
+                window.location.href = url;});
+        }); 
+        })(i)
+    }
+
+    });
+
+})
+    </script>
+
+
+<!--
+<script type="text/javascript">
+        var ht="";
+    
+    for(var i=0;i<23;i++){ //data.count指的是所有视频的数量
+        (function(i){
+        ht+="<div class='item a-hover'><a id='anima_vd"+(i+1)+"' target='_blank'><div class='pic'><img src="+
+        "../static/images/toplog.png"+"></div><p class='a-hover'>"+"dadada"+"</p></a></div>"; 
+        })(i)
+    }
+
+    ht+="<i></i><i></i><i></i><i></i><i></i><i></i>"
+    document.getElementById("anicol").innerHTML=ht;
+
+    for(var i=0;i<23;i++){ //data.count指的是所有视频的数量
+        (function(i){
+        var tmp="#anima_vd"+(i+1);
+        $(function(){
+            video_url = "http://vfx.mtime.cn/Video/2019/03/21/mp4/190321153853126488.mp4";
+            video_name = "dadadad";
+            $(tmp).on("click",function(){
+                url = "playvideo.html?video_url="+video_url+"&video_name="+video_name;//此处拼接内容
+                window.location.href = url;});
+        }); 
+        })(i)
+    }
+</script>
+-->
+
+</html>
+
