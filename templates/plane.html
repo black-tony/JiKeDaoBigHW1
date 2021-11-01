@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<head></head>
+<body>
+<button onclick="window.location.href = 'http://127.0.0.1:5000/user'">跳转到用户管理页面</button>
+
+<div class="bootstrap-table"><div class="fixed-table-toolbar"></div>
+<div class="fixed-table-container" style="padding-bottom: 0px;">
+    <div class="fixed-table-header" style="display: none;"><table></table></div>
+    <div class="fixed-table-body">
+        <div class="fixed-table-loading" style="top: 42px; display: none;">正在努力地加载数据中，请稍候……</div>
+        <table data-url="json/data_alae_list.json" id="table" class="table_style table table-hover table-striped" style="margin: 0 auto">
+    <thead>
+        <tr>
+        <th style="text-align: center; vertical-align: middle; " data-field="id" tabindex="0">
+        <div class="th-inner ">编号</div>
+        <div class="fht-cell"></div>
+    </th>
+    <th style="text-align: center; vertical-align: middle; " data-field="name" tabindex="0">
+        <div class="th-inner ">弹幕</div>
+        <div class="fht-cell"></div>
+    </th>
+    <th style="text-align: center; " data-field="star" tabindex="0">
+        <div class="th-inner ">用户</div>
+        <div class="fht-cell"></div>
+    </th>
+    <th style="text-align: center; " data-field="buildTime" tabindex="0">
+        <div class="th-inner ">发送时间</div>
+        <div class="fht-cell"></div>
+    </th>
+    <th style="text-align: center; " data-field="phone" tabindex="0">
+        <div class="th-inner ">视频（名称/编号）</div>
+        <div class="fht-cell"></div>
+    </th>
+    <th style="text-align: center; " data-field="address" tabindex="0">
+        <div class="th-inner ">备注</div>
+        <div class="fht-cell"></div>
+    </th>
+    <th style="text-align: center; " data-field="oper" tabindex="0">
+        <div class="th-inner ">操作</div>
+        <div class="fht-cell"></div>
+    </th>
+</tr>
+</thead>
+<tbody>
+
+    {% for planes in plane %}
+
+    <tr data-index="0">
+        <td style="text-align: center; vertical-align: middle; ">{{plane[0]}}</td>
+        <td style="vertical-align: middle; ">{{plane[1]}}</td>
+        <td style="text-align: center; ">{{plane[2]}}</td>
+        <td style="text-align: center; ">{{plane[3]}}</td>
+        <td style="text-align: center; ">{{plane[4]}}</td>
+        <td style="text-align: center; ">{{plane[5]}}</td>
+        <td style="text-align: center; ">
+            <button button="#" mce_href="#" onclick="....">删除</button>
+        </td>
+    </tr>
+
+    {% endfor %}
+
+    
+
+</tbody>
+</table>
+</div>
+ <div class="fixed-table-footer" style="display: none;"><table><tbody></tbody><tr></tr></div>
+</div>
+</div>
+</div>
+</body>
