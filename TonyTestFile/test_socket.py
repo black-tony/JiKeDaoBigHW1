@@ -31,9 +31,9 @@ def index():
     return render_template('socket_html.html', async_mode=socketio.async_mode)
 
 
-@socketio.event
+@socketio.on('my_event', namespace='/testSocket')
 def my_event(message):
-    session['receive_count'] = session.get('receive_count', 0) + 1
+    session['receive_count'] = session.get('receive_count', 0) + 66
     emit('my_response',
          {'data': message['data'], 'count': session['receive_count']})
 

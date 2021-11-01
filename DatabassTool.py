@@ -20,19 +20,24 @@ class MysqlUtil(object):
         self.closeAtOnce = closeInst
 
     @staticmethod
-    def __phraseSQL(table, fields, condition="NULL"):
+    def __phraseSQL(table, fields, needNum=-1, condition="NULL"):
         sql = "SELECT "
         haveQuote = 0
-        for i in fields:
-            if haveQuote == 0:
-                haveQuote = 1
-            else:
-                sql += ', '
-            sql += i
+        if fields:
+            for i in fields:
+                if haveQuote == 0:
+                    haveQuote = 1
+                else:
+                    sql += ', '
+                sql += i
+        else:
+            sql += '*'
         sql += " FROM " + table
 
         if condition != "NULL":
             sql += f' WHERE {condition}'
+        if needNum > 0:
+            sql += f' LIMIT {needNum}'
         sql += ';'
         if _DEBUG:
             print(sql)
@@ -118,6 +123,21 @@ class MysqlUtil(object):
         finally:
             self.db.close()
         return results
+
+    def fetchOrderedNum(self, table, needNum, condition="NULL", *fields):
+        sql = self.__phraseSQL(table=table, condition=condition, fields=fields, needNum=needNum)
+
+        result = list()
+        try:
+            self.cursor.execute(sql)
+            result = self.cursor.fetchall()
+        except pymysql.DatabaseError:
+            traceback.print_exc()
+            self.db.rollback()
+        finally:
+            if self.closeAtOnce:
+                self.db.close()
+        return result
 
     def delete(self, table, condition):
         sql = f"DELETE FROM {table} WHERE {condition}"

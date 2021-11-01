@@ -3,6 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <title>biubiu～(∠・ω< )⌒★ Hello~~</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js" integrity="sha512-aMGMvNYu8Ue4G+fHa359jcPb1u+ytAF+P2SCb+PxrjCdO3n3ZTxJ30zuH39rimUggmTwmh2u7wvQsDTHESnmfQ==" crossorigin="anonymous">
+    </script>
+
+    <script type="text/javascript" charset="utf-8">
+    $(document).ready(function() {
+
+    var namespace = '/testSocket';
+    var socket = io.connect('http://127.0.0.1:5000/testSocket');
+
+    /*此处获取视频条数*/
+    socket.on("get_video_nums", function(data, callback) {
+        document.getElementById("animation").innerHTML="<span>动画</span><div class='num'><span>"+
+        data.num[0]+"</span></div>";
+        document.getElementById("music").innerHTML="<span>音乐</span><div class='num'><span>"+
+        data.num[1]+"</span></div>";
+        document.getElementById("dance").innerHTML="<span>舞蹈</span><div class='num'><span>"+
+        data.num[2]+"</span></div>";
+        document.getElementById("technology").innerHTML="<span>科技</span><div class='num'><span>"+
+        data.num[3]+"</span></div>";
+        document.getElementById("life").innerHTML="<span>生活</span><div class='num'><span>"+
+        data.num[4]+"</span></div>";
+        document.getElementById("movie").innerHTML="<span>电影</span><div class='num'><span>"+
+        data.num[5]+"</span></div>";
+        if(callback)
+            callback();
+    });
+
+
+    /*此处获取指定条数的动画信息*/
+    socket.on('connect', function() {
+                socket.emit('get_animation_',{need_video_nums: 6});
+            });
+
+    socket.on("get_animation", function(data, callback) {
+    /*首先分两条给推荐栏*/
+    document.getElementById("anima_v1").innerHTML="<img src="+data.videoInfos[0].videoGraph+"><div class='info-card'><p>"+data.videoInfos[0].videoName+"</p><p class='info'></p></div>"
+    $(function(){
+        name = data.videoInfos[0].videoUrl;
+        $("#anima_v1").on("click",function(){
+            url = "playvideo.html?name="+name;//此处拼接内容
+            window.location.href = url;
+        });
+    });
+
+    document.getElementById("anima_v2").innerHTML="<img src="+data.videoInfos[1].videoGraph+"><div class='info-card'><p>"+data.videoInfos[1].videoName+"</p><p class='info'></p></div>"
+    $(function(){
+        name = data.videoInfos[1].videoUrl;
+        $("#anima_v2").on("click",function(){
+            url = "playvideo.html?name="+name;//此处拼接内容
+            window.location.href = url;
+        });
+    });
+
+    /*将此6条放入动画栏*/
+    for(var i=1;i<=6;i++){
+        document.getElementById("anima_v2").innerHTML="<img src="+data.videoInfos[1].videoGraph+"><div class='info-card'><p>"+data.videoInfos[1].videoName+"</p><p class='info'></p></div>"
+        $(function(){
+            name = data.videoInfos[1].videoUrl;
+            $("#anima_v2").on("click",function(){
+                url = "playvideo.html?name="+name;//此处拼接内容
+                window.location.href = url;
+            });
+        });
+    }
+    if(callback)
+        callback();
+
+    });
+
+
+
+    }
+    </script>
     <link rel="stylesheet" href="../static/css/index_column.css">
     <link rel="stylesheet" href="../static/css/index_header.css">
     <link rel="stylesheet" href="../static/css/index_recommend.css">
@@ -269,7 +345,7 @@
                     </a>
                 </div>
                 <div class="item a-hover">
-                    <a href="#" target="_blank">
+                    <a href="play_video?video_url=aaa&video_name=asdsa" target="_blank">
                         <div class="pic">
                             <img src="./src/images/anime/anime-2.webp" alt="">
                         </div>
@@ -439,77 +515,10 @@
             </div>
         </div>
     </div>
-
+</div>
 </body>
-    
-    <script src="../static/js/jquery.min.js"></script>
-    <script src="../static/js/jquery.params.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous">
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js" integrity="sha512-aMGMvNYu8Ue4G+fHa359jcPb1u+ytAF+P2SCb+PxrjCdO3n3ZTxJ30zuH39rimUggmTwmh2u7wvQsDTHESnmfQ==" crossorigin="anonymous">
-    </script>
-
-    <script type="text/javascript" charset="utf-8">
-    $(document).ready(function() {
-    var socket = io();
-    
-    /*此处获取视频条数*/
-    socket.on("get_video_nums", function(data, callback) { 
-        document.getElementById("animation").innerHTML="<span>动画</span><div class='num'><span>"+
-        data.num[0]+"</span></div>";
-        document.getElementById("music").innerHTML="<span>音乐</span><div class='num'><span>"+
-        data.num[1]+"</span></div>";
-        document.getElementById("dance").innerHTML="<span>舞蹈</span><div class='num'><span>"+
-        data.num[2]+"</span></div>";
-        document.getElementById("technology").innerHTML="<span>科技</span><div class='num'><span>"+
-        data.num[3]+"</span></div>";
-        document.getElementById("life").innerHTML="<span>生活</span><div class='num'><span>"+
-        data.num[4]+"</span></div>";
-        document.getElementById("movie").innerHTML="<span>电影</span><div class='num'><span>"+
-        data.num[5]+"</span></div>";
-    });
-    
-
-    /*此处获取指定条数的动画信息*/
-    socket.emit('get_animation',{need_video_nums: 6});
-    socket.on("get_animation", function(data, callback) { 
-    /*首先分两条给推荐栏*/
-    document.getElementById("anima_v1").innerHTML="<img src="+data.videoInfos[0].videoGraph+"><div class='info-card'><p>"+data.videoInfos[0].videoName+"</p><p class='info'></p></div>"
-    $(function(){
-        name = data.videoInfos[0].videoUrl;
-        $("#anima_v1").on("click",function(){
-            url = "playvideo.html?name="+name;//此处拼接内容
-            window.location.href = url;
-        });
-    });   
-
-    document.getElementById("anima_v2").innerHTML="<img src="+data.videoInfos[1].videoGraph+"><div class='info-card'><p>"+data.videoInfos[1].videoName+"</p><p class='info'></p></div>"
-    $(function(){
-        name = data.videoInfos[1].videoUrl;
-        $("#anima_v2").on("click",function(){
-            url = "playvideo.html?name="+name;//此处拼接内容
-            window.location.href = url;
-        });
-    }); 
-  
-    /*将此6条放入动画栏*/
-    for(var i=1;i<=6;i++){
-        document.getElementById("anima_v2").innerHTML="<img src="+data.videoInfos[1].videoGraph+"><div class='info-card'><p>"+data.videoInfos[1].videoName+"</p><p class='info'></p></div>"
-        $(function(){
-            name = data.videoInfos[1].videoUrl;
-            $("#anima_v2").on("click",function(){
-                url = "playvideo.html?name="+name;//此处拼接内容
-                window.location.href = url;
-            });
-        }); 
-    }
-
-    });
 
 
-
-    }
-    </script>
 </html>
 
 

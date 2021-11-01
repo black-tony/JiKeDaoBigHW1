@@ -34,11 +34,21 @@ PRIMARY_KEY_VIDEO_INFO = ["videoUrl"]
 VIDEO_INFO = {
     "videoUrl": "varchar(100)",
     "videoGraph": "varchar(100)",
-    "videoName": "varchar(100)"
+    "videoName": "varchar(100)",
+    "videoCate": "varchar(100)"
 }
 VIDEO_URL = "videoUrl"
 VIDEO_GRAPH = "videoGraph"
 VIDEO_NAME = "videoName"
+VIDEO_CATE = "videoCate"
+VIDEO_CATE_CACHE = [
+    "animation",
+    "music",
+    "dance",
+    "technology",
+    "life",
+    "movie"
+]
 
 
 

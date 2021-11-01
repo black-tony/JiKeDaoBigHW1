@@ -1,6 +1,6 @@
 import flask
 from flask import request, render_template, redirect, session, url_for
-from flask_socketio import SocketIO
+from flask_socketio import SocketIO, emit
 
 import Myconstants
 from DatabassTool import MysqlUtil
@@ -42,7 +42,7 @@ def login():
                 findResult = 2
             if findResult > 0:
                 socketio.emit("login_response", {"error_code": findResult})
-                return
+                return render_template("Login_new.html")
             # 找到暂时先转到生成的网页
             session['username'] = userName
             # express = f"<h2>hello !{userName} </h2><h2>Your password is {passWord}!</h2>" + \
@@ -99,9 +99,9 @@ def mainPage():
     if not ('username' in session):
         return redirect('/login')
 
-    # 根据内容确定, 感觉应该不会需要post协议
-
-    return render_template('/index.html')
+    # TODO:根据内容确定, 感觉应该不会需要post协议
+    # getVideoNums(None)
+    return render_template('/index.html', async_mode=socketio.async_mode)
 
 
 @app.route('/play_video', methods=['GET'])
@@ -120,11 +120,42 @@ def playPage():
 
         videoUrl = request.args["video_url"]
         videoName = request.args['video_name']
+        print(videoUrl, videoName)
         return render_template('playvideo.html', video_url=videoUrl, video_name=videoName)
 
 
-if __name__ == "__main__":
-    app.run(debug=True)
+@socketio.on('get_animation_', namespace="/testSocket")
+def getAnimation(message):
+    print(message)
+    needNum = message['need_video_nums']
 
-# {"videoInfos" : [ [videoUrl, videoName, videoGraph], [], [], [], []] }
-# videoGraph: ./static/XXX.png
+    # 查询数据库, 拿到message条信息
+    db = MysqlUtil()
+    result = db.fetchOrderedNum(Myconstants.TABLE_VIDEO_INFO, needNum, [])
+    emit("get_animation", {"videoInfos": result},
+         callback=lambda: print("getAnimation Finish!"), namespace="/testSocket"
+         )
+
+    # 返回信息, 按照如下格式
+    # {"videoInfos" : [ {videoUrl:val, videoName:val, videoGraph:val}, [], [], [], []] }
+    # videoGraph: ./static/XXX.png
+
+
+def getVideoNums(message):
+
+    nameCount = []
+    for i in Myconstants.VIDEO_CATE_CACHE:
+        db = MysqlUtil()
+        result = db.fetchall(Myconstants.TABLE_VIDEO_INFO,
+                             f"{Myconstants.VIDEO_CATE} = '{i}'",
+                             Myconstants.VIDEO_NAME
+                             )
+        nameCount.append(len(result))
+    print(nameCount)
+    emit("get_video_nums", {"num": nameCount}, callback=lambda: print("getVideoNum Finish!")
+         , namespace="/testSocket")
+
+
+if __name__ == "__main__":
+    socketio.run(app, debug=True)
+    # app.run(debug=True)
