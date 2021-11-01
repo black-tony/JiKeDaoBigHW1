@@ -13,7 +13,7 @@
         <div class="guide-wrapper">
             <ul class="nav clearfix">
                 <li>
-                    <a href="#">
+                    <a href="http://127.0.0.1:5000/index">
                     <span>首页</span><div class="num"><span>home</span></div>
                     </a>
                 </li>
@@ -35,7 +35,6 @@
     <!--分割线-->
     <div class="line_01"></div>
  
-    <!--动画-->
     <div class="column">
         <div class="column-left">
             <div class="column-title">动画专栏 / Animation column</div>
@@ -73,13 +72,12 @@
         data.num[5]+"</span></div>";
     });
     
-
-    /*此处获取指定条数的动画信息*/
+    //若没有事先的socket.emit说明索取的视频条数，则get_animation表示获取全部动画类视频 
     socket.on("get_animation", function(data, callback) { 
-    //若没有事先的socket.emit说明索取的视频条数，则get_animation表示获取全部视频 
+    
     var ht="";
     
-    for(var i=0;i<data.count;i++){ //data.count指的是所有视频的数量
+    for(var i=0;i<data.count;i++){ //data.count指的是所有动画类视频的数量
         (function(i){
         ht+="<div class='item a-hover'><a id='anima_vd"+(i+1)+"' target='_blank'><div class='pic'><img src="+
         data.videoInfos[i].videoGraph+"></div><p class='a-hover'>"+data.videoInfos[i].videoName+"</p></a></div>"; 
@@ -89,7 +87,7 @@
     ht+="<i></i><i></i><i></i><i></i><i></i><i></i>"
     document.getElementById("anicol").innerHTML=ht;
 
-    for(var i=0;i<data.count;i++){ //data.count指的是所有视频的数量
+    for(var i=0;i<data.count;i++){ 
         (function(i){
         var tmp="#anima_vd"+(i+1);
         $(function(){
