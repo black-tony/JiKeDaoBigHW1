@@ -1,6 +1,8 @@
+import random
+
 import flask
 from flask import request, render_template, redirect, session, url_for
-from flask_socketio import SocketIO, emit
+from flask_socketio import SocketIO, emit, disconnect
 
 import Myconstants
 from DatabassTool import MysqlUtil
@@ -8,6 +10,11 @@ from DatabassTool import MysqlUtil
 app = flask.Flask(__name__)
 app.config['SECRET_KEY'] = "r`9[M-AtuO"
 socketio = SocketIO(app, async_mode=None)
+
+
+def __output(*message):
+    if Myconstants.DEBUG:
+        print(message)
 
 
 # 现在是运行起来之后,http://127.0.0.1:5000/ 这里可以看到html的内容了
@@ -41,7 +48,7 @@ def login():
             elif passWord != result[Myconstants.USER_PSWD]:
                 findResult = 2
             if findResult > 0:
-                socketio.emit("login_response", {"error_code": findResult})
+                socketio.emit("login_response", {"error_code": findResult}, namespace='/login')
                 return render_template("Login_new.html")
             # 找到暂时先转到生成的网页
             session['username'] = userName
@@ -120,29 +127,37 @@ def playPage():
 
         videoUrl = request.args["video_url"]
         videoName = request.args['video_name']
-        print(videoUrl, videoName)
+        __output(videoUrl, videoName)
         return render_template('playvideo.html', video_url=videoUrl, video_name=videoName)
 
 
-@socketio.on('get_animation_', namespace="/testSocket")
+@socketio.on('disconnect', namespace='/login')
+def onDisconnect():
+    disconnect()
+
+
+@socketio.on('get_animation')
 def getAnimation(message):
-    print(message)
+    __output(message)
     needNum = message['need_video_nums']
 
     # 查询数据库, 拿到message条信息
     db = MysqlUtil()
-    result = db.fetchOrderedNum(Myconstants.TABLE_VIDEO_INFO, needNum, [])
-    emit("get_animation", {"videoInfos": result},
-         callback=lambda: print("getAnimation Finish!"), namespace="/testSocket"
-         )
+    result = db.fetchall(Myconstants.TABLE_VIDEO_INFO,
+                         f"{Myconstants.VIDEO_CATE}='{Myconstants.VIDEO_CATE_CACHE[1]}'")
+    random.shuffle(result)
+    ret = []
+    for i in range(1, needNum + 1, 1):
+        ret.append(result[i])
+    emit("get_animation", {"videoInfos": ret})
 
     # 返回信息, 按照如下格式
     # {"videoInfos" : [ {videoUrl:val, videoName:val, videoGraph:val}, [], [], [], []] }
     # videoGraph: ./static/XXX.png
 
 
-def getVideoNums(message):
-
+@socketio.on("get_video_nums")
+def getVideoNums():
     nameCount = []
     for i in Myconstants.VIDEO_CATE_CACHE:
         db = MysqlUtil()
@@ -151,9 +166,8 @@ def getVideoNums(message):
                              Myconstants.VIDEO_NAME
                              )
         nameCount.append(len(result))
-    print(nameCount)
-    emit("get_video_nums", {"num": nameCount}, callback=lambda: print("getVideoNum Finish!")
-         , namespace="/testSocket")
+    __output(nameCount)
+    emit("get_video_nums", {"num": nameCount})
 
 
 if __name__ == "__main__":

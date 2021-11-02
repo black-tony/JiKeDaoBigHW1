@@ -195,6 +195,7 @@
     var socket = io();
     
     /*此处获取视频条数*/
+    socket.emit("get_video_nums");
     socket.on("get_video_nums", function(data, callback) { 
         document.getElementById("animation").innerHTML="<span>动画</span><div class='num'><span>"+
         data.num[0]+"</span></div>";

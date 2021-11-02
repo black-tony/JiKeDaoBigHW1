@@ -3,7 +3,7 @@ import traceback
 import pymysql
 import Myconstants
 
-_DEBUG = True
+_DEBUG = Myconstants.DEBUG
 TABLE_CONST = "employee"
 
 
