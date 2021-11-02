@@ -58,16 +58,18 @@
 
 <script>
 
-    //var video_url = $.query.get("video_url");
-    //var video_name= $.query.get("video_name");
-    //document.getElementById("title").innerHTML= video_name;
-    document.getElementById("title").innerHTML= "这才是大会员该看的视频";//测试
+    var video_url = $.query.get("video_url");
+    var video_name= $.query.get("video_name");
+    document.getElementById("title").innerHTML= video_name;
+    //document.getElementById("title").innerHTML= "这才是大会员该看的视频";//测试
 
   $("#danmup").DanmuPlayer({
-    src:"http://vfx.mtime.cn/Video/2019/03/17/mp4/190317150237409904.mp4",//测试
-    //src:video_url,
+    //src:"https://player.bilibili.com/player.html?cid=434232342&aid=633934272&page=1",//测试
+    src:video_url,
     height: "680px", //区域的高度
     width: "1100px", //区域的宽度
+    //urlToGetDanmu:"../static/php/query.php",
+    //urlToPostDanmu:"../static/php/stone.php"
   });
 
   /*弹幕测试
@@ -103,27 +105,21 @@ $(document).ready(function() {
         document.getElementById("movie").innerHTML="<span>电影</span><div class='num'><span>"+
         data.num[5]+"</span></div>";
     });
-    
-    socket.on("get_userid", function(data, callback) { 
-        userid=data.id;
-    });
 
     /*此处获取弹幕信息并发送*/
     /*弹幕信息依次为：内容，颜色(存储形式为#RGB,如#ffffff)，字体大小(取值0/1，0表示小号，1表示大号)
     位置(取值0-2，1表示顶部弹幕，2表示底部弹幕，0表示滚动弹幕)，时间(乘10计数，如720表示第72s)*/
     //存储方式:data.danmuinfo数组，包含data.num（弹幕条数）和data.danmuinfo，
     //data.danmuinfo[i]包含content(string类型),color(string类型，存储的时候包含#),fontsize,position,time五个参数
-    /*socket.on("get_danmu", function(data, callback) {
+    socket.on("get_danmu", function(data, callback) {
         for(var i=0;i<data.num;i++){
             $("#danmup .danmu-div").danmu("addDanmu",[
         { "text":data.danmuinfo[i].content ,color:data.danmuinfo[i].color,size:data.danmuinfo[i].fontsize,
         position:data.danmuinfo[i].position,time:data.danmuinfo[i].time}])
         } 
-    });*/
+    });
     
 })
 </script>
-
-
 
 </html>
