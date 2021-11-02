@@ -7,7 +7,6 @@
  * 版本2.0 2015/08/12
  */
 
-
 ;
 (function ($) {
 
@@ -141,7 +140,7 @@
                 danmuFromSql = eval(data);
                 for (var i = 0; i < danmuFromSql.length; i++) {
                     try {
-                        var danmuLs = eval('(' + danmuFromSql[i] + ')');
+                        var danmuLs = eval(danmuFromSql[i]);
                     } catch (e) {
                         continue;
                     }
@@ -169,9 +168,28 @@
             var size = $(e.data.that.id + " input[name=danmu_size]:checked").val();
             var time = $(e.data.that.id + " .danmu-div").data("nowTime") + 3;
             var textObj = '{ "text":"' + text + '","color":"' + color + '","size":"' + size + '","position":"' + position + '","time":' + time + '}';
+            var tableEle = '"' + text + '","' + color + '",' + size + ',' + position + ',' + time;
+            
+            import "../static/js/socket.io.js";
+            import "../static/js/jquery.min.js";
+            $(document).ready(function() {
+                var socket = io();
+                var userid;
+                socket.on("get_userid", function(data, callback) { userid=data.id;});  
+                socket.emit("send_danmu", 
+                {
+                    danmu_text:text,
+                    danmu_color:color,
+                    danmu_size:size,
+                    danmu_position:position,
+                    danmu_time:time,
+                    danmu_userid:userid
+                });
+            })   
+            
             if (e.data.that.options.urlToPostDanmu)
                 $.post(e.data.that.options.urlToPostDanmu, {
-                    danmu: textObj
+                    tb:tableEle
                 });
             textObj = '{ "text":"' + text + '","color":"' + color + '","size":"' + size + '","position":"' + position + '","time":' + time + ',"isnew":""}';
             var newObj = eval('(' + textObj + ')');
@@ -406,8 +424,8 @@
         FontSizeBig: 24,
         opacity: "1",
         topBottonDanmuTime: 6000,
-        urlToGetDanmu: "",
-        urlToPostDanmu: ""
+        urlToGetDanmu: "../static/php/query.php",
+        urlToPostDanmu: "../static/php/stone.php"
     };
 
 
