@@ -46,54 +46,51 @@
 </div>
 </body>
 
-<script src="../static/src/js/jquery-2.1.4.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous">
+</script>
+<script src="../static/js/jquery.params.js"></script>
 <script src="../static/src/js/jquery.shCircleLoader.js"></script>
 <script src="../static/src/js/sco.tooltip.js"></script>
 <script src="../static/src/js/colpick.js"></script>
 <script src="../static/src/js/jquery.danmu.js"></script>
 <script src="../static/src/js/main.js"></script>
-<script src="../static/js/jquery.params.js"></script>
 
 <script>
 
-    //var video_url = $.query.get("video_url");
-    //var video_name= $.query.get("video_name");
-    //document.getElementById("title").innerHTML= video_name;
-    document.getElementById("title").innerHTML= "这才是大会员该看的视频";//测试
+    var video_url = $.query.get("video_url");
+    var video_name= $.query.get("video_name");
+    document.getElementById("title").innerHTML= video_name;
+    //document.getElementById("title").innerHTML= "这才是大会员该看的视频";//测试
 
   $("#danmup").DanmuPlayer({
-    src:"http://vfx.mtime.cn/Video/2019/03/18/mp4/190318231014076505.mp4",//测试
-    //src:video_url,
+    //src:"https://player.bilibili.com/player.html?cid=434232342&aid=633934272&page=1",//测试
+    src:video_url,
     height: "680px", //区域的高度
     width: "1100px", //区域的宽度
-    urlToGetDanmu:"query.php",
-    urlToPostDanmu:"stone.php"
+    //urlToGetDanmu:"../static/php/query.php",
+    //urlToPostDanmu:"../static/php/stone.php"
   });
 
+  /*弹幕测试
+  for(var i=1;i<5;i++){
+    $("#danmup .danmu-div").danmu("addDanmu",[
+    { "text":"这是滚动弹幕" ,color:"#b34db3",size:0,position:0,time:i*10}])
+  }*/
 
-  $("#danmup .danmu-div").danmu("addDanmu",[
-    { "text":"这是滚动弹幕" ,color:"white",size:1,position:0,time:2}
-    ,{ "text":"我是帽子绿" ,color:"green",size:1,position:0,time:3}
-    ,{ "text":"哈哈哈啊哈" ,color:"black",size:1,position:0,time:10}
-    ,{ "text":"这是顶部弹幕" ,color:"yellow" ,size:1,position:1,time:3}
-    ,{ "text":"这是底部弹幕" , color:"red" ,size:1,position:2,time:9}
-    ,{ "text":"大家好，我是伊藤橙" ,color:"orange",size:1,position:1,time:130}//130==13s
-  ])
 </script>
 
 
-<script src="../static/js/jquery.min.js"></script>
-<script src="../static/js/jquery.params.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous">
-</script>
+  
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js" integrity="sha512-aMGMvNYu8Ue4G+fHa359jcPb1u+ytAF+P2SCb+PxrjCdO3n3ZTxJ30zuH39rimUggmTwmh2u7wvQsDTHESnmfQ==" crossorigin="anonymous">
 </script>
 
 <script type="text/javascript" charset="utf-8">
+    var userid;
+
 $(document).ready(function() {
-var socket = io();
+    var socket = io();
     
-    /*此处获取视频条数*/
     socket.on("get_video_nums", function(data, callback) { 
         document.getElementById("animation").innerHTML="<span>动画</span><div class='num'><span>"+
         data.num[0]+"</span></div>";
@@ -108,14 +105,21 @@ var socket = io();
         document.getElementById("movie").innerHTML="<span>电影</span><div class='num'><span>"+
         data.num[5]+"</span></div>";
     });
+
+    /*此处获取弹幕信息并发送*/
+    /*弹幕信息依次为：内容，颜色(存储形式为#RGB,如#ffffff)，字体大小(取值0/1，0表示小号，1表示大号)
+    位置(取值0-2，1表示顶部弹幕，2表示底部弹幕，0表示滚动弹幕)，时间(乘10计数，如720表示第72s)*/
+    //存储方式:data.danmuinfo数组，包含data.num（弹幕条数）和data.danmuinfo，
+    //data.danmuinfo[i]包含content(string类型),color(string类型，存储的时候包含#),fontsize,position,time五个参数
+    socket.on("get_danmu", function(data, callback) {
+        for(var i=0;i<data.num;i++){
+            $("#danmup .danmu-div").danmu("addDanmu",[
+        { "text":data.danmuinfo[i].content ,color:data.danmuinfo[i].color,size:data.danmuinfo[i].fontsize,
+        position:data.danmuinfo[i].position,time:data.danmuinfo[i].time}])
+        } 
+    });
     
-
-
 })
 </script>
-
-
-
-
 
 </html>
