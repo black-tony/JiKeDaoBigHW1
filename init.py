@@ -313,6 +313,15 @@ def getAnimation(message):
     # videoGraph: ./static/XXX.png
 
 
+# # TODO: 完成这些内容
+# {
+# 'danmu_text': 'asdasd',
+# 'danmu_color': '#ffffff',
+# 'danmu_size': '1',
+# 'danmu_position': '0',
+# 'danmu_time': 21,
+# 'danmu_userid': 'root'
+# }
 @socketio.on('send_danmu')
 def receiveDanmuku(message):
     __output(message)

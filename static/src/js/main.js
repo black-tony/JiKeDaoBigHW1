@@ -175,7 +175,7 @@
             var socket = io();
             var userid;
             socket.emit("get_userid");
-            socket.on("get_userid", function(data, callback) { userid=data.id;});
+            socket.on("get_userid", function(data, callback) { userid=data.id;
             socket.emit("send_danmu",
             {
                 danmu_text:text,
@@ -185,6 +185,9 @@
                 danmu_time:time,
                 danmu_userid:userid
             });
+
+            });
+
 
             if (e.data.that.options.urlToPostDanmu)
                 $.post(e.data.that.options.urlToPostDanmu, {

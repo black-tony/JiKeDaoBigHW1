@@ -20,14 +20,17 @@ USER_MAIL = "userMail"
 TABLE_DANMAKU_INFO = "danmakuinfo"
 PRIMARY_KEY_DANMAKU_INFO = []
 DANMAKU_INFO = {
-    "danmakuContent": "varchar(100)",
-    "danmakuTimeAxis": "int unsigned",
-    "danmakuUser": "varchar(50)"
+    "danmakuText": "varchar(100)",
+    "danmakuColor": "varchar(10)",
+    "danmakuSize": "int, unsigned",
+    "danmukuPos" : 'int unsigned',
+    "danmukuTime": 'int unsigned',
+    "danmukuUser": 'varchar(50)'
 }
-D_CONTENT = "danmakuContent"
-D_TIMEAXIS = "danmakuTimeAxis"
+D_TEXT = "danmakuText"
+D_TIME = "danmakuTime"
 D_USER = "danmakuUser"
-
+# TODO : 还有几个
 
 TABLE_VIDEO_INFO = "videoinfo"
 PRIMARY_KEY_VIDEO_INFO = ["videoUrl"]
