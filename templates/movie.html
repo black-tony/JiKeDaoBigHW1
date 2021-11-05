@@ -57,6 +57,7 @@
     var socket = io();
     
     /*此处获取视频条数*/
+    socket.emit("get_video_nums");
     socket.on("get_video_nums", function(data, callback) { 
         document.getElementById("animation").innerHTML="<span>动画</span><div class='num'><span>"+
         data.num[0]+"</span></div>";
@@ -72,7 +73,8 @@
         data.num[5]+"</span></div>";
     });
     
-    //若没有事先的socket.emit说明索取的视频条数，则get_movie表示获取全部电影类视频 
+    //若没有事先的socket.emit说明索取的视频条数，则get_movie表示获取全部电影类视频
+    //Yang: socket.emit是服务端得到需求的唯一方法, 不可以删除
     socket.on("get_movie", function(data, callback) { 
 
     var ht="";

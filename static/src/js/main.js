@@ -6,7 +6,8 @@
  *
  * 版本2.0 2015/08/12
  */
-
+//import "../static/js/socket.io.js";
+//import "../static/js/jquery.min.js";
 ;
 (function ($) {
 
@@ -170,23 +171,24 @@
             var textObj = '{ "text":"' + text + '","color":"' + color + '","size":"' + size + '","position":"' + position + '","time":' + time + '}';
             var tableEle = '"' + text + '","' + color + '",' + size + ',' + position + ',' + time;
             
-            import "../static/js/socket.io.js";
-            import "../static/js/jquery.min.js";
-            $(document).ready(function() {
-                var socket = io();
-                var userid;
-                socket.on("get_userid", function(data, callback) { userid=data.id;});  
-                socket.emit("send_danmu", 
-                {
-                    danmu_text:text,
-                    danmu_color:color,
-                    danmu_size:size,
-                    danmu_position:position,
-                    danmu_time:time,
-                    danmu_userid:userid
-                });
-            })   
-            
+
+            var socket = io();
+            var userid;
+            socket.emit("get_userid");
+            socket.on("get_userid", function(data, callback) { userid=data.id;
+            socket.emit("send_danmu",
+            {
+                danmu_text:text,
+                danmu_color:color,
+                danmu_size:size,
+                danmu_position:position,
+                danmu_time:time,
+                danmu_userid:userid
+            });
+
+            });
+
+
             if (e.data.that.options.urlToPostDanmu)
                 $.post(e.data.that.options.urlToPostDanmu, {
                     tb:tableEle

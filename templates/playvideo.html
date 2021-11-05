@@ -54,10 +54,12 @@
 <script src="../static/src/js/sco.tooltip.js"></script>
 <script src="../static/src/js/colpick.js"></script>
 <script src="../static/src/js/jquery.danmu.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js" integrity="sha512-aMGMvNYu8Ue4G+fHa359jcPb1u+ytAF+P2SCb+PxrjCdO3n3ZTxJ30zuH39rimUggmTwmh2u7wvQsDTHESnmfQ==" crossorigin="anonymous">
+</script>
 <script src="../static/src/js/main.js"></script>
 
 <script>
-
+//
     var video_url = $.query.get("video_url");
     var video_name= $.query.get("video_name");
     document.getElementById("title").innerHTML= video_name;
@@ -82,15 +84,15 @@
 
 
   
-<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js" integrity="sha512-aMGMvNYu8Ue4G+fHa359jcPb1u+ytAF+P2SCb+PxrjCdO3n3ZTxJ30zuH39rimUggmTwmh2u7wvQsDTHESnmfQ==" crossorigin="anonymous">
-</script>
+
 
 <script type="text/javascript" charset="utf-8">
     var userid;
 
 $(document).ready(function() {
     var socket = io();
-    
+
+    socket.emit("get_video_nums");
     socket.on("get_video_nums", function(data, callback) { 
         document.getElementById("animation").innerHTML="<span>动画</span><div class='num'><span>"+
         data.num[0]+"</span></div>";
@@ -111,6 +113,7 @@ $(document).ready(function() {
     位置(取值0-2，1表示顶部弹幕，2表示底部弹幕，0表示滚动弹幕)，时间(乘10计数，如720表示第72s)*/
     //存储方式:data.danmuinfo数组，包含data.num（弹幕条数）和data.danmuinfo，
     //data.danmuinfo[i]包含content(string类型),color(string类型，存储的时候包含#),fontsize,position,time五个参数
+    socket.emit("get_danmu");
     socket.on("get_danmu", function(data, callback) {
         for(var i=0;i<data.num;i++){
             $("#danmup .danmu-div").danmu("addDanmu",[

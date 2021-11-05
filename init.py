@@ -1,6 +1,8 @@
+import random
+
 import flask
 from flask import request, render_template, redirect, session, url_for
-from flask_socketio import SocketIO, emit
+from flask_socketio import SocketIO, emit, disconnect
 
 import Myconstants
 from DatabassTool import MysqlUtil
@@ -8,6 +10,11 @@ from DatabassTool import MysqlUtil
 app = flask.Flask(__name__)
 app.config['SECRET_KEY'] = "r`9[M-AtuO"
 socketio = SocketIO(app, async_mode=None)
+
+
+def __output(*message):
+    if Myconstants.DEBUG:
+        print(message)
 
 
 # 现在是运行起来之后,http://127.0.0.1:5000/ 这里可以看到html的内容了
@@ -41,7 +48,7 @@ def login():
             elif passWord != result[Myconstants.USER_PSWD]:
                 findResult = 2
             if findResult > 0:
-                socketio.emit("login_response", {"error_code": findResult})
+                socketio.emit("login_response", {"error_code": findResult}, namespace='/login')
                 return render_template("Login_new.html")
             # 找到暂时先转到生成的网页
             session['username'] = userName
@@ -117,32 +124,51 @@ def playPage():
             session['video_url'] = videoUrl
             session['video_name'] = videoName
             return redirect('/login')
-
+        if not ('video_url' in request.args) or not ('video_name' in request.args):
+            return redirect('/index')
         videoUrl = request.args["video_url"]
         videoName = request.args['video_name']
-        print(videoUrl, videoName)
+        __output(videoUrl, videoName)
         return render_template('playvideo.html', video_url=videoUrl, video_name=videoName)
 
 
-@socketio.on('get_animation_', namespace="/testSocket")
-def getAnimation(message):
-    print(message)
-    needNum = message['need_video_nums']
-
-    # 查询数据库, 拿到message条信息
-    db = MysqlUtil()
-    result = db.fetchOrderedNum(Myconstants.TABLE_VIDEO_INFO, needNum, [])
-    emit("get_animation", {"videoInfos": result},
-         callback=lambda: print("getAnimation Finish!"), namespace="/testSocket"
-         )
-
-    # 返回信息, 按照如下格式
-    # {"videoInfos" : [ {videoUrl:val, videoName:val, videoGraph:val}, [], [], [], []] }
-    # videoGraph: ./static/XXX.png
+@app.route('/animation')
+def animationPage():
+    return render_template('animation.html')
 
 
-def getVideoNums(message):
+@app.route('/dance')
+def dancePage():
+    return render_template('dance.html')
 
+
+@app.route('/life')
+def lifePage():
+    return render_template('life.html')
+
+
+@app.route('/movie')
+def moviePage():
+    return render_template('movie.html')
+
+
+@app.route('/music')
+def musicPage():
+    return render_template('music.html')
+
+
+@app.route('/technology')
+def technologyPage():
+    return render_template('technology.html')
+
+
+@socketio.on('disconnect', namespace='/login')
+def onDisconnect():
+    disconnect()
+
+
+@socketio.on("get_video_nums")
+def getVideoNums():
     nameCount = []
     for i in Myconstants.VIDEO_CATE_CACHE:
         db = MysqlUtil()
@@ -151,9 +177,168 @@ def getVideoNums(message):
                              Myconstants.VIDEO_NAME
                              )
         nameCount.append(len(result))
-    print(nameCount)
-    emit("get_video_nums", {"num": nameCount}, callback=lambda: print("getVideoNum Finish!")
-         , namespace="/testSocket")
+    __output(nameCount)
+    emit("get_video_nums", {"num": nameCount})
+
+
+@socketio.on('get_' + Myconstants.VIDEO_CATE_CACHE[1])
+def getMusic(message):
+    needNum = message['need_video_nums']
+
+    # 查询数据库, 拿到message条信息
+    db = MysqlUtil()
+    result = db.fetchall(Myconstants.TABLE_VIDEO_INFO,
+                         f"{Myconstants.VIDEO_CATE}='{Myconstants.VIDEO_CATE_CACHE[1]}'")
+    random.shuffle(result)
+    ret = []
+    if needNum != -1:
+        for i in range(0, min(needNum, len(result)), 1):
+            ret.append(result[i])
+    else:
+        ret = result
+    emit('get_' + Myconstants.VIDEO_CATE_CACHE[1], {"videoInfos": ret})
+
+    # 返回信息, 按照如下格式
+    # {"videoInfos" : [ {videoUrl:val, videoName:val, videoGraph:val}, [], [], [], []] }
+    # videoGraph: ./static/XXX.png
+
+
+@socketio.on('get_' + Myconstants.VIDEO_CATE_CACHE[2])
+def getDance(message):
+    needNum = message['need_video_nums']
+
+    # 查询数据库, 拿到message条信息
+    db = MysqlUtil()
+    result = db.fetchall(Myconstants.TABLE_VIDEO_INFO,
+                         f"{Myconstants.VIDEO_CATE}='{Myconstants.VIDEO_CATE_CACHE[2]}'")
+    random.shuffle(result)
+    ret = []
+    if needNum != -1:
+        for i in range(0, min(needNum, len(result)), 1):
+            ret.append(result[i])
+    else:
+        ret = result
+    emit('get_' + Myconstants.VIDEO_CATE_CACHE[2], {"videoInfos": ret})
+
+    # 返回信息, 按照如下格式
+    # {"videoInfos" : [ {videoUrl:val, videoName:val, videoGraph:val}, [], [], [], []] }
+    # videoGraph: ./static/XXX.png
+
+
+@socketio.on('get_' + Myconstants.VIDEO_CATE_CACHE[3])
+def getTechnology(message):
+    needNum = message['need_video_nums']
+
+    # 查询数据库, 拿到message条信息
+    db = MysqlUtil()
+    result = db.fetchall(Myconstants.TABLE_VIDEO_INFO,
+                         f"{Myconstants.VIDEO_CATE}='{Myconstants.VIDEO_CATE_CACHE[3]}'")
+    random.shuffle(result)
+    ret = []
+    if needNum != -1:
+        for i in range(0, min(needNum, len(result)), 1):
+            ret.append(result[i])
+    else:
+        ret = result
+    emit('get_' + Myconstants.VIDEO_CATE_CACHE[3], {"videoInfos": ret})
+
+    # 返回信息, 按照如下格式
+    # {"videoInfos" : [ {videoUrl:val, videoName:val, videoGraph:val}, [], [], [], []] }
+    # videoGraph: ./static/XXX.png
+
+
+@socketio.on('get_' + Myconstants.VIDEO_CATE_CACHE[4])
+def getLife(message):
+    needNum = message['need_video_nums']
+
+    # 查询数据库, 拿到message条信息
+    db = MysqlUtil()
+    result = db.fetchall(Myconstants.TABLE_VIDEO_INFO,
+                         f"{Myconstants.VIDEO_CATE}='{Myconstants.VIDEO_CATE_CACHE[4]}'")
+    random.shuffle(result)
+    ret = []
+    if needNum != -1:
+        for i in range(0, min(needNum, len(result)), 1):
+            ret.append(result[i])
+    else:
+        ret = result
+    emit('get_' + Myconstants.VIDEO_CATE_CACHE[4], {"videoInfos": ret})
+
+    # 返回信息, 按照如下格式
+    # {"videoInfos" : [ {videoUrl:val, videoName:val, videoGraph:val}, [], [], [], []] }
+    # videoGraph: ./static/XXX.png
+
+
+@socketio.on('get_' + Myconstants.VIDEO_CATE_CACHE[5])
+def getMovie(message):
+    needNum = message['need_video_nums']
+
+    # 查询数据库, 拿到message条信息
+    db = MysqlUtil()
+    result = db.fetchall(Myconstants.TABLE_VIDEO_INFO,
+                         f"{Myconstants.VIDEO_CATE}='{Myconstants.VIDEO_CATE_CACHE[5]}'")
+    random.shuffle(result)
+    ret = []
+    if needNum != -1:
+        for i in range(0, min(needNum, len(result)), 1):
+            ret.append(result[i])
+    else:
+        ret = result
+    emit('get_' + Myconstants.VIDEO_CATE_CACHE[5], {"videoInfos": ret})
+
+    # 返回信息, 按照如下格式
+    # {"videoInfos" : [ {videoUrl:val, videoName:val, videoGraph:val}, [], [], [], []] }
+    # videoGraph: ./static/XXX.png
+
+
+@socketio.on('get_' + Myconstants.VIDEO_CATE_CACHE[0])
+def getAnimation(message):
+    needNum = message['need_video_nums']
+
+    # 查询数据库, 拿到message条信息
+    db = MysqlUtil()
+    result = db.fetchall(Myconstants.TABLE_VIDEO_INFO,
+                         f"{Myconstants.VIDEO_CATE}='{Myconstants.VIDEO_CATE_CACHE[0]}'")
+    random.shuffle(result)
+    ret = []
+    if needNum != -1:
+        for i in range(0, min(needNum, len(result)), 1):
+            ret.append(result[i])
+    else:
+        ret = result
+    emit('get_' + Myconstants.VIDEO_CATE_CACHE[0], {"videoInfos": ret})
+
+    # 返回信息, 按照如下格式
+    # {"videoInfos" : [ {videoUrl:val, videoName:val, videoGraph:val}, [], [], [], []] }
+    # videoGraph: ./static/XXX.png
+
+
+# # TODO: 完成这些内容
+# {
+# 'danmu_text': 'asdasd',
+# 'danmu_color': '#ffffff',
+# 'danmu_size': '1',
+# 'danmu_position': '0',
+# 'danmu_time': 21,
+# 'danmu_userid': 'root'
+# }
+@socketio.on('send_danmu')
+def receiveDanmuku(message):
+    __output(message)
+
+
+@socketio.on('get_userid')
+def getUserId():
+    emit('get_userid', {'id': session['username']})
+
+
+@socketio.on('get_danmu')
+def sendDanmuku():
+    emit('get_danmu', {'num': 1, "danmuinfo": [{'content': 'testDanmuku',
+                                                'color': '#ffffff',
+                                                'fontsize': 0,
+                                                'position': 0,
+                                                'time': 10}]})
 
 
 if __name__ == "__main__":
