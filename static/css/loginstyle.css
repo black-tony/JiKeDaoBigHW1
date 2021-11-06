@@ -9,7 +9,9 @@
 }
 
 body{
-	background: #fafafa;
+	/*background: #fafafa;*/
+	background-image:url("../images/background.jpg");
+	background-size: cover;
 	font-size: 14px;
 }
 
@@ -21,10 +23,12 @@ body{
 }
 
 .wrapper .header .top,
-.wrapper .signup{
-	background: #fff;
+.wrapper .welcome{
+	background: rgb(255, 255, 255);
+	border-radius: 5px;
+	opacity: 0.93;
     border: 1px solid #e6e6e6;
-    border-radius: 1px;
+   
     padding: 40px 40px 20px;
 }
 
@@ -52,7 +56,7 @@ body{
 }
 
 .wrapper .header .form .btn input{
-	margin: 20px 0 0 2px;
+	margin: 28px 0 22px 2px;
 	padding: 5px;
 	color: #fff;
 	display: block;
@@ -84,24 +88,21 @@ body{
 }
 
 
-.wrapper .dif .forgot{
+.wrapper .dif .other{
 	font-size: 12px;
 	text-align: center;
 	margin-top: 20px;
 }
 
-.wrapper .dif .forgot a{
+.wrapper .dif .other a{
 	color: #003569;
 }
 
-.wrapper .signup{
+.wrapper .welcome{
 	margin: 10px 0 20px;
-	padding: 25px 40px;
+	padding: 15px 40px;
+	border-radius: 5px;
 	text-align: center;
+	font-size: 12px;
 	color: #262626;
 }
-
-.wrapper .signup a{
-	color: #3897f0;
-}
-

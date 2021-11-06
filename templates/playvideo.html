@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
     <title>biubiu～(∠・ω< )⌒★ Hello~~</title>
-    <link rel="stylesheet" href="../static/css/index_header.css">
     <link rel="stylesheet" href="../static/css/playvideo.css">
     <link rel="stylesheet" href="../static/src/css/scojs.css">
     <link rel="stylesheet" href="../static/src/css/colpick.css">
@@ -12,29 +11,12 @@
 </head>
 
 <body>
-<div class="header">
-    <div class="nav-img"></div>
-        <div class="guide-wrapper">
-            <ul class="nav clearfix">
-                <li>
-                    <a href="http://127.0.0.1:5000/index">
-                    <span>首页</span><div class="num"><span>home</span></div>
-                    </a>
-                </li>
-                <li><a href="http://127.0.0.1:5000/animation" id="animation"></a></li>
-                <li><a href="http://127.0.0.1:5000/music" id="music"></a></li>
-                <li><a href="http://127.0.0.1:5000/dance" id="dance"></a></li>
-                <li><a href="http://127.0.0.1:5000/technology" id="technology"></a></li>
-                <li><a href="http://127.0.0.1:5000/life" id="life"></a></li>
-                <li><a href="http://127.0.0.1:5000/movie" id="movie"></a></li>
-            </ul>
-        </div>
-</div>
 
 <!--播放界面-->
 <div class="video_title" id="title"></div>
 
-<div id="danmup" style="left: 50%;margin-left:-700px;top:30px;margin-bottom: 400px;"></div>
+<div id="danmup" style="left: 50%;margin-left:-640px;top:30px;margin-bottom: 170px;">
+</div>
 <div style="display: none">
   <span class="glyphicon" aria-hidden="true">&#xe072</span>
   <span class="glyphicon" aria-hidden="true">&#xe073</span>
@@ -63,13 +45,13 @@
     var video_url = $.query.get("video_url");
     var video_name= $.query.get("video_name");
     document.getElementById("title").innerHTML= video_name;
-    //document.getElementById("title").innerHTML= "这才是大会员该看的视频";//测试
+    //document.getElementById("title").innerHTML= "【原神手书】《璃月少年少女闲话逸事》";//测试
 
   $("#danmup").DanmuPlayer({
-    //src:"https://player.bilibili.com/player.html?cid=434232342&aid=633934272&page=1",//测试
+    //src:"http://vfx.mtime.cn/Video/2019/03/21/mp4/190321153853126488.mp4",//测试
     src:video_url,
-    height: "680px", //区域的高度
-    width: "1100px", //区域的宽度
+    height: "600px", //区域的高度
+    width: "1000px", //区域的宽度
     //urlToGetDanmu:"../static/php/query.php",
     //urlToPostDanmu:"../static/php/stone.php"
   });

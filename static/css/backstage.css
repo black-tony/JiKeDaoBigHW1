@@ -1,0 +1,43 @@
+body {
+    font-family: "Microsoft YaHhei",sans-serif;
+    color: #666;
+    padding-top: 70px;
+}
+
+.user .page-header {
+    margin-top: 0;
+}
+
+
+.user .page-header h1 {
+    margin: 0;
+    font-size: 16px;
+}
+
+
+.user .table {
+    border: 1px solid #ddd;
+    border-top: none;
+}
+
+
+.user .table tbody tr th,
+.user .table tbody tr td {
+    line-height: 40px;
+}
+
+button {
+    width: 60px;
+    height: 35px;
+    line-height: 35px;
+    background:linear-gradient(315deg, #89d8d3 0%, #03c8a8 74%);
+    border: none;
+    border-radius: 10px;
+    font-weight: 500;
+    font-size: 12px;
+    vertical-align:middle;
+    text-align: center;
+    color: #fff;
+    outline: none;
+    position: relative;
+}
