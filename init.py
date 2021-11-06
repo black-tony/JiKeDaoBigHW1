@@ -51,7 +51,7 @@ def login():
                 return render_template("Login_new.html")
             # 找到暂时先转到生成的网页
             session['username'] = userName
-            session['level'] = result[Myconstants.USER_ID]
+            session['level'] = result[Myconstants.USER_RANK]
             # express = f"<h2>hello !{userName} </h2><h2>Your password is {passWord}!</h2>" + \
             #          f"<h2>Your Rank Is {result[Myconstants.USER_RANK]}</h2>"
             # return express
@@ -165,8 +165,8 @@ def configUser():
     return render_template('user.html')
 
 
-@app.route('/danmuku_config')
-def configDanmuku():
+@app.route('/danmaku_config')
+def configDanmaku():
     return render_template('plane.html')
 
 
@@ -336,20 +336,20 @@ def getAnimation(message):
 # 'danmu_video': 'name'
 # }
 @socketio.on('send_danmu')
-def receiveDanmuku(message):
+def receiveDanmaku(message):
     # __output(message)
     db = MysqlUtil()
 
-    danmukuInfo = {
+    danmakuInfo = {
         Myconstants.D_POS: message['danmu_position'],
-        Myconstants.D_TEXT: message['danmu_text'],
+        Myconstants.D_TEXT: f"'{message['danmu_text']}'",
         Myconstants.D_TIME: message['danmu_time'],
-        Myconstants.D_USER: message['danmu_userid'],
+        Myconstants.D_USER: f"'{message['danmu_userid']}'",
         Myconstants.D_SIZE: message['danmu_size'],
-        Myconstants.D_COLOR: message['danmu_color'],
-        Myconstants.D_VIDEO: message['danmu_video']
+        Myconstants.D_COLOR: f"'{message['danmu_color']}'",
+        Myconstants.D_VIDEO: f"'{message['danmu_video']}'"
     }
-    db.insert(Myconstants.TABLE_DANMAKU_INFO, danmukuInfo)
+    db.insert(Myconstants.TABLE_DANMAKU_INFO, danmakuInfo)
     # TODO: 根据需要进行broadcast
 
 
@@ -359,17 +359,17 @@ def getUserId():
 
 
 @socketio.on('get_danmu')
-def sendDanmuku(message):
+def sendDanmaku(message):
     db = MysqlUtil()
-    curDanmuku = db.fetchall(table=Myconstants.TABLE_DANMAKU_INFO,
+    curDanmaku = db.fetchall(table=Myconstants.TABLE_DANMAKU_INFO,
                              condition=f"{Myconstants.D_VIDEO}='{message['danmu_video']}'")
     # data.danmuinfo[i]包含content(string类型),
     # color(string类型，存储的时候包含#),
     # fontsize,
     # position,
     # time五个参数
-    retDanmuku = []
-    for i in curDanmuku:
+    retDanmaku = []
+    for i in curDanmaku:
         curInfo = {
             "content": i[Myconstants.D_TEXT],
             "color": i[Myconstants.D_COLOR],
@@ -377,8 +377,8 @@ def sendDanmuku(message):
             "position": i[Myconstants.D_POS],
             "time": i[Myconstants.D_TIME]
         }
-        retDanmuku.append(curInfo)
-    emit('get_danmu', {'num': len(curDanmuku), "danmuinfo": retDanmuku})
+        retDanmaku.append(curInfo)
+    emit('get_danmu', {'num': len(curDanmaku), "danmuinfo": retDanmaku})
 
 
 @socketio.on('get_userlist')
@@ -399,16 +399,20 @@ def returnUserList():
 def deleteUser(message):
     db = MysqlUtil()
     result = db.fetchall(Myconstants.TABLE_USER_INFO)
+    print("INS")
     orderPlace = message['place']
     if len(result) >= orderPlace:
+        print(orderPlace)
         userInfo = result[orderPlace - 1]
         if session['level'] > userInfo[Myconstants.USER_RANK]:
             ndb = MysqlUtil()
             ndb.delete(Myconstants.TABLE_USER_INFO, f"{Myconstants.USER_NAME}='{userInfo[Myconstants.USER_NAME]}'")
+    else:
+        print("FUCK")
 
 
 @socketio.on('get_danmulist')
-def getDanmuku():
+def getDanmaku():
     db = MysqlUtil()
     result = db.fetchall(Myconstants.TABLE_DANMAKU_INFO)
     retList = []
@@ -420,19 +424,32 @@ def getDanmuku():
             "content": i[Myconstants.D_TEXT]
         }
         retList.append(tmpD)
-    emit('get_userlist', {"count": len(retList), "danmu": retList})
+    emit('get_danmulist', {"count": len(retList), "danmu": retList})
 
 
 @socketio.on('delete_danmu')
-def deleteDanmuku(message):
+def deleteDanmaku(message):
     db = MysqlUtil()
     result = db.fetchall(Myconstants.TABLE_DANMAKU_INFO)
     orderPlace = message['place']
     if len(result) >= orderPlace:
+        print(orderPlace)
         DInfo = result[orderPlace - 1]
         if session['level'] > 1:
             ndb = MysqlUtil()
             ndb.delete(Myconstants.TABLE_DANMAKU_INFO, f"{Myconstants.D_ID}={DInfo[Myconstants.D_ID]}")
+    else:
+        print("FUCK")
+
+
+@socketio.on('get_usergrade')
+def getUsergrade():
+    grade = -1
+    if session['level'] > 1:
+        grade = 1
+    else:
+        grade = 0
+    emit("get_usergrade", {"grade": grade})
 
 
 if __name__ == "__main__":
