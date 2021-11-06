@@ -33,8 +33,9 @@ body {
 }
 
 .nav-img {
-    background-image: url('../images/toplog.png');
-    height: 170px;
+    background-image: url('../images/toploge.png');
+    background-size: cover;
+    height: 190px;
     background-position: center;
     background-repeat: no-repeat;
 }
