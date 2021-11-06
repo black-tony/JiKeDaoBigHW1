@@ -55,4 +55,4 @@ def __createTable(tableName, tableInfo, primaryKey):
 # __createTable(Myconstants.TABLE_DANMAKU_INFO, Myconstants.DANMAKU_INFO, Myconstants.PRIMARY_KEY_DANMAKU_INFO)
 # __createTable(Myconstants.TABLE_VIDEO_INFO, Myconstants.VIDEO_INFO, Myconstants.PRIMARY_KEY_VIDEO_INFO)
 
-os.system(f"mysql -u{user} -p{password} < Db_1106.sql")
+os.system(f"mysql -u{user} -p{password} < dbFile.sql")
