@@ -1,4 +1,5 @@
 /*每日推荐*/
+
 .main-page > .recommend {
     display: flex;
     justify-content: space-between;
@@ -55,4 +56,11 @@
     height: 40px;
     overflow: hidden;
     margin-bottom: 5px;
+}
+
+img{
+    max-width: 100%;
+	max-height: 100%;
+    object-fit: cover;
+    height: 280px;
 }

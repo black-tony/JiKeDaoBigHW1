@@ -219,38 +219,36 @@
     document.getElementById("anima_v1").innerHTML="<img src="+data.videoInfos[0].videoGraph+"><div class='info-card'><p>"+
     data.videoInfos[0].videoName+"</p><p class='info'></p></div>";
     $(function(){
-        video_url = data.videoInfos[0].videoUrl;
-        video_name = data.videoInfos[0].videoName;
+        let video_url = data.videoInfos[0].videoUrl;
+        let video_name = data.videoInfos[0].videoName;
         $("#anima_v1").on("click",function(){
             url = "play_video?video_url="+video_url+"&video_name="+video_name;//此处拼接内容
-            window.location.href = url;
+            window.open(url);
         });
     });   
 
     document.getElementById("anima_v2").innerHTML="<img src="+data.videoInfos[1].videoGraph+"><div class='info-card'><p>"+
     data.videoInfos[1].videoName+"</p><p class='info'></p></div>";
     $(function(){
-        video_url = data.videoInfos[1].videoUrl;
-        video_name = data.videoInfos[1].videoName;
+        let video_url = data.videoInfos[1].videoUrl;
+        let video_name = data.videoInfos[1].videoName;
         $("#anima_v2").on("click",function(){
             url = "play_video?video_url="+video_url+"&video_name="+video_name;//此处拼接内容
-            window.location.href = url;
+            window.open(url);
         });
     }); 
   
     /*将此6条放入动画栏*/
-    for(var i=0;i<6;i++){
-        (function(i){
+    for(let i=0;i<6;i++){
         document.getElementById("anima_vd"+(i+1)).innerHTML= "<div class='pic'><img src="+data.videoInfos[i].videoGraph+"></div><p class='a-hover'>"+data.videoInfos[i].videoName+"</p>";
-        var tmp="#anima_vd"+(i+1);
+        let tmp="#anima_vd"+(i+1);
         $(function(){
-            video_url = data.videoInfos[i].videoUrl;
-            video_name = data.videoInfos[i].videoName;
+            let video_url = data.videoInfos[i].videoUrl;
+            let video_name = data.videoInfos[i].videoName;
             $(tmp).on("click",function(){
                 url = "play_video?video_url="+video_url+"&video_name="+video_name;//此处拼接内容
-                window.location.href = url;});
+                window.open(url);});
         }); 
-        })(i)
     }
     });
 
@@ -262,38 +260,36 @@
     document.getElementById("music_v1").innerHTML="<img src="+data.videoInfos[0].videoGraph+"><div class='info-card'><p>"+
     data.videoInfos[0].videoName+"</p><p class='info'></p></div>";
     $(function(){
-        video_url = data.videoInfos[0].videoUrl;
-        video_name = data.videoInfos[0].videoName;
+        let video_url = data.videoInfos[0].videoUrl;
+        let video_name = data.videoInfos[0].videoName;
         $("#music_v1").on("click",function(){
             url = "play_video?video_url="+video_url+"&video_name="+video_name;//此处拼接内容
-            window.location.href = url;
+            window.open(url);
         });
     });   
 
     document.getElementById("music_v2").innerHTML="<img src="+data.videoInfos[1].videoGraph+"><div class='info-card'><p>"+
     data.videoInfos[1].videoName+"</p><p class='info'></p></div>";
     $(function(){
-        video_url = data.videoInfos[1].videoUrl;
-        video_name = data.videoInfos[1].videoName;
+        let video_url = data.videoInfos[1].videoUrl;
+        let video_name = data.videoInfos[1].videoName;
         $("#music_v2").on("click",function(){
             url = "play_video?video_url="+video_url+"&video_name="+video_name;//此处拼接内容
-            window.location.href = url;
+            window.open(url);
         });
     }); 
   
     /*将此6条放入音乐栏*/
-    for(var i=0;i<6;i++){
-        (function(i){
+    for(let i=0;i<6;i++){
         document.getElementById("music_vd"+(i+1)).innerHTML= "<div class='pic'><img src="+data.videoInfos[i].videoGraph+"></div><p class='a-hover'>"+data.videoInfos[i].videoName+"</p>";
-        var tmp="#music_vd"+(i+1);
+        let tmp="#music_vd"+(i+1);
         $(function(){
-            video_url = data.videoInfos[i].videoUrl;
-            video_name = data.videoInfos[i].videoName;
+            let video_url = data.videoInfos[i].videoUrl;
+            let video_name = data.videoInfos[i].videoName;
             $(tmp).on("click",function(){
                 url = "play_video?video_url="+video_url+"&video_name="+video_name;//此处拼接内容
-                window.location.href = url;});
+                window.open(url);});
         }); 
-        })(i)
     }
     });
 
@@ -305,28 +301,26 @@
     document.getElementById("dance_v1").innerHTML="<img src="+data.videoInfos[0].videoGraph+"><div class='info-card'><p>"+
     data.videoInfos[0].videoName+"</p><p class='info'></p></div>";
     $(function(){
-        video_url = data.videoInfos[0].videoUrl;
-        video_name = data.videoInfos[0].videoName;
+        let video_url = data.videoInfos[0].videoUrl;
+        let video_name = data.videoInfos[0].videoName;
         $("#dance_v1").on("click",function(){
             url = "play_video?video_url="+video_url+"&video_name="+video_name;//此处拼接内容
-            window.location.href = url;
+            window.open(url);
         });
     });   
  
   
     /*将此6条放入舞蹈栏*/
-    for(var i=0;i<6;i++){
-        (function(i){
+    for(let i=0;i<6;i++){
         document.getElementById("dance_vd"+(i+1)).innerHTML= "<div class='pic'><img src="+data.videoInfos[i].videoGraph+"></div><p class='a-hover'>"+data.videoInfos[i].videoName+"</p>";
-        var tmp="#dance_vd"+(i+1);
+        let tmp="#dance_vd"+(i+1);
         $(function(){
-            video_url = data.videoInfos[i].videoUrl;
-            video_name = data.videoInfos[i].videoName;
+            let video_url = data.videoInfos[i].videoUrl;
+            let video_name = data.videoInfos[i].videoName;
             $(tmp).on("click",function(){
                 url = "play_video?video_url="+video_url+"&video_name="+video_name;//此处拼接内容
-                window.location.href = url;});
+                window.open(url);});
         }); 
-        })(i)
     }
     });
 
@@ -338,27 +332,25 @@
     document.getElementById("technology_v1").innerHTML="<img src="+data.videoInfos[0].videoGraph+"><div class='info-card'><p>"+
     data.videoInfos[0].videoName+"</p><p class='info'></p></div>";
     $(function(){
-        video_url = data.videoInfos[0].videoUrl;
-        video_name = data.videoInfos[0].videoName;
+        let video_url = data.videoInfos[0].videoUrl;
+        let video_name = data.videoInfos[0].videoName;
         $("#technology_v1").on("click",function(){
             url = "play_video?video_url="+video_url+"&video_name="+video_name;//此处拼接内容
-            window.location.href = url;
+            window.open(url);
         });
     });   
   
     /*将此6条放入科技栏*/
-    for(var i=0;i<6;i++){
-        (function(i){
+    for(let i=0;i<6;i++){
         document.getElementById("techn_vd"+(i+1)).innerHTML= "<div class='pic'><img src="+data.videoInfos[i].videoGraph+"></div><p class='a-hover'>"+data.videoInfos[i].videoName+"</p>";
-        var tmp="#techn_vd"+(i+1);
+        let tmp="#techn_vd"+(i+1);
         $(function(){
-            video_url = data.videoInfos[i].videoUrl;
-            video_name = data.videoInfos[i].videoName;
+            let video_url = data.videoInfos[i].videoUrl;
+            let video_name = data.videoInfos[i].videoName;
             $(tmp).on("click",function(){
                 url = "play_video?video_url="+video_url+"&video_name="+video_name;//此处拼接内容
-                window.location.href = url;});
+                window.open(url);});
         }); 
-        })(i)
     }
     });
 
@@ -370,27 +362,25 @@
     document.getElementById("life_v1").innerHTML="<img src="+data.videoInfos[0].videoGraph+"><div class='info-card'><p>"+
     data.videoInfos[0].videoName+"</p><p class='info'></p></div>";
     $(function(){
-        video_url = data.videoInfos[0].videoUrl;
-        video_name = data.videoInfos[0].videoName;
+        let video_url = data.videoInfos[0].videoUrl;
+        let video_name = data.videoInfos[0].videoName;
         $("#life_v1").on("click",function(){
             url = "play_video?video_url="+video_url+"&video_name="+video_name;//此处拼接内容
-            window.location.href = url;
+            window.open(url);
         });
     });   
   
     /*将此6条放入生活栏*/
-    for(var i=0;i<6;i++){
-        (function(i){
+    for(let i=0;i<6;i++){
         document.getElementById("life_vd"+(i+1)).innerHTML= "<div class='pic'><img src="+data.videoInfos[i].videoGraph+"></div><p class='a-hover'>"+data.videoInfos[i].videoName+"</p>";
-        var tmp="#life_vd"+(i+1);
+        let tmp="#life_vd"+(i+1);
         $(function(){
-            video_url = data.videoInfos[i].videoUrl;
-            video_name = data.videoInfos[i].videoName;
+            let video_url = data.videoInfos[i].videoUrl;
+            let video_name = data.videoInfos[i].videoName;
             $(tmp).on("click",function(){
                 url = "play_video?video_url="+video_url+"&video_name="+video_name;//此处拼接内容
-                window.location.href = url;});
+                window.open(url);});
         }); 
-        })(i)
     }
     });
 
@@ -402,48 +392,47 @@
     document.getElementById("movie_v1").innerHTML="<img src="+data.videoInfos[0].videoGraph+"><div class='info-card'><p>"+
     data.videoInfos[0].videoName+"</p><p class='info'></p></div>";
     $(function(){
-        video_url = data.videoInfos[0].videoUrl;
-        video_name = data.videoInfos[0].videoName;
+        let video_url = data.videoInfos[0].videoUrl;
+        let video_name = data.videoInfos[0].videoName;
         $("#movie_v1").on("click",function(){
             url = "play_video?video_url="+video_url+"&video_name="+video_name;//此处拼接内容
-            window.location.href = url;
+            window.open(url);
         });
     });   
 
   
     /*将此6条放入电影栏*/
-    for(var i=0;i<6;i++){
-        (function(i){
+    for(let i=0;i<6;i++){
         document.getElementById("movie_vd"+(i+1)).innerHTML= "<div class='pic'><img src="+data.videoInfos[i].videoGraph+"></div><p class='a-hover'>"+data.videoInfos[i].videoName+"</p>";
-        var tmp="#movie_vd"+(i+1);
+        let tmp="#movie_vd"+(i+1);
         $(function(){
-            video_url = data.videoInfos[i].videoUrl;
-            video_name = data.videoInfos[i].videoName;
+            let video_url = data.videoInfos[i].videoUrl;
+            let video_name = data.videoInfos[i].videoName;
             $(tmp).on("click",function(){
                 url = "play_video?video_url="+video_url+"&video_name="+video_name;//此处拼接内容
-                window.location.href = url;});
-        }); 
-        })(i)
+                window.open(url);});
+        });    
     }
     });    
 
 })
     </script>
 
-<!--test
+<!--
 <script type="text/javascript">
-        for(var i=0;i<6;i++){
-        (function(i){
+        for(let i=0;i<6;i++){
+        
         document.getElementById("anima_vd"+(i+1)).innerHTML= "<div class='pic'><img src="+"../static/images/toplog.png"+"></div><p class='a-hover'>"+"askdhaskdhasd"+"</p>";
-        var tmp="#anima_vd"+(i+1);
+        let tmp="#anima_vd"+(i+1);
+
         $(function(){
-            video_url = "http://vfx.mtime.cn/Video/2019/03/19/mp4/190319212559089721.mp4";
-            video_name = "askdhaskdhasd";
+            let video_url = "http://vfx.mtime.cn/Video/2019/03/19/mp4/190319212559089721.mp4";
+            let video_name = "vd"+i;
             $(tmp).on("click",function(){
                 url = "playvideo.html?video_url="+video_url+"&video_name="+video_name;//此处拼接内容
                 window.location.href = url;});
         }); 
-        })(i)
+        
     }
 </script>-->
 
