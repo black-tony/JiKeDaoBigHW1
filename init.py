@@ -1,5 +1,4 @@
 import random
-
 import flask
 from flask import request, render_template, redirect, session, url_for
 from flask_socketio import SocketIO, emit, disconnect
@@ -52,6 +51,7 @@ def login():
                 return render_template("Login_new.html")
             # 找到暂时先转到生成的网页
             session['username'] = userName
+            session['level'] = result[Myconstants.USER_ID]
             # express = f"<h2>hello !{userName} </h2><h2>Your password is {passWord}!</h2>" + \
             #          f"<h2>Your Rank Is {result[Myconstants.USER_RANK]}</h2>"
             # return express
@@ -105,8 +105,6 @@ def mainPage():
     # 没有登录就转到登录界面
     if not ('username' in session):
         return redirect('/login')
-
-    # TODO:根据内容确定, 感觉应该不会需要post协议
     # getVideoNums(None)
     return render_template('/index.html', async_mode=socketio.async_mode)
 
@@ -160,6 +158,16 @@ def musicPage():
 @app.route('/technology')
 def technologyPage():
     return render_template('technology.html')
+
+
+@app.route('/user_config')
+def configUser():
+    return render_template('user.html')
+
+
+@app.route('/danmuku_config')
+def configDanmuku():
+    return render_template('plane.html')
 
 
 @socketio.on('disconnect', namespace='/login')
@@ -316,7 +324,8 @@ def getAnimation(message):
     # videoGraph: ./static/XXX.png
 
 
-# # TODO: 完成这些内容
+# TODO: 测试弹幕模块
+
 # {
 # 'danmu_text': 'asdasd',
 # 'danmu_color': '#ffffff',
@@ -324,10 +333,24 @@ def getAnimation(message):
 # 'danmu_position': '0',
 # 'danmu_time': 21,
 # 'danmu_userid': 'root'
+# 'danmu_video': 'name'
 # }
 @socketio.on('send_danmu')
 def receiveDanmuku(message):
-    __output(message)
+    # __output(message)
+    db = MysqlUtil()
+
+    danmukuInfo = {
+        Myconstants.D_POS: message['danmu_position'],
+        Myconstants.D_TEXT: message['danmu_text'],
+        Myconstants.D_TIME: message['danmu_time'],
+        Myconstants.D_USER: message['danmu_userid'],
+        Myconstants.D_SIZE: message['danmu_size'],
+        Myconstants.D_COLOR: message['danmu_color'],
+        Myconstants.D_VIDEO: message['danmu_video']
+    }
+    db.insert(Myconstants.TABLE_DANMAKU_INFO, danmukuInfo)
+    # TODO: 根据需要进行broadcast
 
 
 @socketio.on('get_userid')
@@ -336,12 +359,80 @@ def getUserId():
 
 
 @socketio.on('get_danmu')
-def sendDanmuku():
-    emit('get_danmu', {'num': 1, "danmuinfo": [{'content': 'testDanmuku',
-                                                'color': '#ffffff',
-                                                'fontsize': 0,
-                                                'position': 0,
-                                                'time': 10}]})
+def sendDanmuku(message):
+    db = MysqlUtil()
+    curDanmuku = db.fetchall(table=Myconstants.TABLE_DANMAKU_INFO,
+                             condition=f"{Myconstants.D_VIDEO}='{message['danmu_video']}'")
+    # data.danmuinfo[i]包含content(string类型),
+    # color(string类型，存储的时候包含#),
+    # fontsize,
+    # position,
+    # time五个参数
+    retDanmuku = []
+    for i in curDanmuku:
+        curInfo = {
+            "content": i[Myconstants.D_TEXT],
+            "color": i[Myconstants.D_COLOR],
+            "fontsize": i[Myconstants.D_SIZE],
+            "position": i[Myconstants.D_POS],
+            "time": i[Myconstants.D_TIME]
+        }
+        retDanmuku.append(curInfo)
+    emit('get_danmu', {'num': len(curDanmuku), "danmuinfo": retDanmuku})
+
+
+@socketio.on('get_userlist')
+def returnUserList():
+    db = MysqlUtil()
+    result = db.fetchall(Myconstants.TABLE_USER_INFO)
+    retList = []
+    for i in result:
+        tmpUser = {
+            "name": i[Myconstants.USER_NAME],
+            "password": i[Myconstants.USER_PSWD]
+        }
+        retList.append(tmpUser)
+    emit('get_userlist', {"count": len(retList), "user": retList})
+
+
+@socketio.on('delete_user')
+def deleteUser(message):
+    db = MysqlUtil()
+    result = db.fetchall(Myconstants.TABLE_USER_INFO)
+    orderPlace = message['place']
+    if len(result) >= orderPlace:
+        userInfo = result[orderPlace - 1]
+        if session['level'] > userInfo[Myconstants.USER_RANK]:
+            ndb = MysqlUtil()
+            ndb.delete(Myconstants.TABLE_USER_INFO, f"{Myconstants.USER_NAME}='{userInfo[Myconstants.USER_NAME]}'")
+
+
+@socketio.on('get_danmulist')
+def getDanmuku():
+    db = MysqlUtil()
+    result = db.fetchall(Myconstants.TABLE_DANMAKU_INFO)
+    retList = []
+    for i in result:
+        tmpD = {
+            "videoname": i[Myconstants.D_VIDEO],
+            "time": i[Myconstants.D_TIME],
+            "user": i[Myconstants.D_USER],
+            "content": i[Myconstants.D_TEXT]
+        }
+        retList.append(tmpD)
+    emit('get_userlist', {"count": len(retList), "danmu": retList})
+
+
+@socketio.on('delete_danmu')
+def deleteDanmuku(message):
+    db = MysqlUtil()
+    result = db.fetchall(Myconstants.TABLE_DANMAKU_INFO)
+    orderPlace = message['place']
+    if len(result) >= orderPlace:
+        DInfo = result[orderPlace - 1]
+        if session['level'] > 1:
+            ndb = MysqlUtil()
+            ndb.delete(Myconstants.TABLE_DANMAKU_INFO, f"{Myconstants.D_ID}={DInfo[Myconstants.D_ID]}")
 
 
 if __name__ == "__main__":

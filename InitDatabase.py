@@ -9,34 +9,35 @@ port = Myconstants.PORT_CONST
 password = Myconstants.PASSWORD_CONST
 database = Myconstants.DATABASE_CONST
 
+
 #
-# def __createTable(tableName, tableInfo, primaryKey):
-#     db = pymysql.connect(host=host, port=port, user=user, password=password, db=database)
-#     cursor = db.cursor(cursor=pymysql.cursors.DictCursor)
-#     sqlOrder = "CREATE TABLE IF NOT EXISTS " + f'{tableName}' + " ("
-#     notFirst = 0
-#     for key, value in tableInfo.items():
-#         if notFirst == 0:
-#             notFirst = 1
-#         else:
-#             sqlOrder += ", "
-#         sqlOrder += f"{key} {value} NOT NULL"
-#     if primaryKey:
-#         sqlOrder += ', PRIMARY key('
-#         notFirst = 0
-#         for i in primaryKey:
-#             if notFirst == 0:
-#                 notFirst = 1
-#             else:
-#                 sqlOrder += ", "
-#             sqlOrder += f'{i}'
-#         sqlOrder += ")"
-#     sqlOrder += ");"
-#     # print(sqlOrder)
-#     cursor.execute(sqlOrder)
-#     db.commit()
-#     cursor.close()
-#     db.close()
+def __createTable(tableName, tableInfo, primaryKey):
+    # db = pymysql.connect(host=host, port=port, user=user, password=password, db=database)
+    # cursor = db.cursor(cursor=pymysql.cursors.DictCursor)
+    sqlOrder = "CREATE TABLE IF NOT EXISTS " + f'{tableName}' + " ("
+    notFirst = 0
+    for key, value in tableInfo.items():
+        if notFirst == 0:
+            notFirst = 1
+        else:
+            sqlOrder += ", "
+        sqlOrder += f"{key} {value} NOT NULL"
+    if primaryKey:
+        sqlOrder += ', PRIMARY key('
+        notFirst = 0
+        for i in primaryKey:
+            if notFirst == 0:
+                notFirst = 1
+            else:
+                sqlOrder += ", "
+            sqlOrder += f'{i}'
+        sqlOrder += ")"
+    sqlOrder += ");"
+    print(sqlOrder)
+    # cursor.execute(sqlOrder)
+    # db.commit()
+    # cursor.close()
+    # db.close()
 
 
 # sqlOrder = "CREATE TABLE IF NOT EXIST " + Myconstants.TABLE_USER_INFO + " ("

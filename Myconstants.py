@@ -10,7 +10,7 @@ USER_INFO = {
     "userName": "varchar(50)",
     "userPswd": "varchar(50)",
     "userRank": "int unsigned",
-    "userMail": "varchar(50)"
+    "userMail": "varchar(50)",
 }
 USER_NAME = "userName"
 USER_PSWD = "userPswd"
@@ -18,19 +18,25 @@ USER_RANK = "userRank"
 USER_MAIL = "userMail"
 
 TABLE_DANMAKU_INFO = "danmakuinfo"
-PRIMARY_KEY_DANMAKU_INFO = []
+PRIMARY_KEY_DANMAKU_INFO = ["danmukuId"]
 DANMAKU_INFO = {
     "danmakuText": "varchar(100)",
     "danmakuColor": "varchar(10)",
     "danmakuSize": "int, unsigned",
-    "danmukuPos" : 'int unsigned',
+    "danmukuPos": 'int unsigned',
     "danmukuTime": 'int unsigned',
-    "danmukuUser": 'varchar(50)'
+    "danmukuUser": 'varchar(50)',
+    "danmukuVideo": "varchar(100)",
+    "danmukuId": "int unsigned AUTO_INCREASE"
 }
 D_TEXT = "danmakuText"
 D_TIME = "danmakuTime"
 D_USER = "danmakuUser"
-# TODO : 还有几个
+D_COLOR = "danmakuColor"
+D_SIZE = "danmakuSize"
+D_POS = "danmukuPos"
+D_VIDEO = "danmukuVideo"
+D_ID = "danmukuId"
 
 TABLE_VIDEO_INFO = "videoinfo"
 PRIMARY_KEY_VIDEO_INFO = ["videoUrl"]

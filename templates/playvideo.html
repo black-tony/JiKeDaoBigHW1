@@ -73,7 +73,7 @@
 
 $(document).ready(function() {
     var socket = io();
-
+    var video_name= $.query.get("video_name");
     socket.emit("get_video_nums");
     socket.on("get_video_nums", function(data, callback) { 
         document.getElementById("animation").innerHTML="<span>动画</span><div class='num'><span>"+
@@ -95,7 +95,7 @@ $(document).ready(function() {
     位置(取值0-2，1表示顶部弹幕，2表示底部弹幕，0表示滚动弹幕)，时间(乘10计数，如720表示第72s)*/
     //存储方式:data.danmuinfo数组，包含data.num（弹幕条数）和data.danmuinfo，
     //data.danmuinfo[i]包含content(string类型),color(string类型，存储的时候包含#),fontsize,position,time五个参数
-    socket.emit("get_danmu");
+    socket.emit("get_danmu", {danmu_video: video_name});
     socket.on("get_danmu", function(data, callback) {
         for(var i=0;i<data.num;i++){
             $("#danmup .danmu-div").danmu("addDanmu",[
