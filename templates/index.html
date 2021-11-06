@@ -24,6 +24,7 @@
                 <li><a href="http://127.0.0.1:5000/technology" id="technology"></a></li>
                 <li><a href="http://127.0.0.1:5000/life" id="life"></a></li>
                 <li><a href="http://127.0.0.1:5000/movie" id="movie"></a></li>
+                <li><a href="http://127.0.0.1:5000/user" id="backstg"></a></li>
             </ul>
         </div>
 </div>
@@ -211,6 +212,13 @@
         data.num[5]+"</span></div>";
     });
     
+    /*此处获取用户权限，判断是否可以进入后台*/	
+	socket.emit("get_usergrade");
+    socket.on("get_usergrade", function(data, callback) { 
+		if(data.grade==1){	//表示有权限访问后台用户,或者1表示有权限
+			document.getElementById("backstg").innerHTML="<span>后台</span><div class='num'><span>in</span></div>";
+		}
+    });
 
     /*此处获取指定条数的动画信息*/
     socket.emit('get_animation',{need_video_nums: 6});
@@ -437,4 +445,3 @@
 </script>-->
 
 </html>
-
