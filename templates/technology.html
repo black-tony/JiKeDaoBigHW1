@@ -78,65 +78,31 @@
     socket.emit('get_technology',{need_video_nums: -1});
     socket.on("get_technology", function(data, callback) { 
 
-    var ht="";
+    let ht="";
     
-    for(var i=0;i<data.count;i++){ //data.count指的是所有科技类视频的数量
-        (function(i){
+    for(let i=0;i<data.count;i++){ //data.count指的是所有科技类视频的数量
         ht+="<div class='item a-hover'><a id='anima_vd"+(i+1)+"' target='_blank'><div class='pic'><img src="+
         data.videoInfos[i].videoGraph+"></div><p class='a-hover'>"+data.videoInfos[i].videoName+"</p></a></div>"; 
-        })(i)
     }
 
     ht+="<i></i><i></i><i></i><i></i><i></i><i></i>"
     document.getElementById("anicol").innerHTML=ht;
 
-    for(var i=0;i<data.count;i++){ 
-        (function(i){
-        var tmp="#anima_vd"+(i+1);
+    for(let i=0;i<data.count;i++){ 
+        let tmp="#anima_vd"+(i+1);
         $(function(){
-            video_url = data.videoInfos[i].videoUrl;
-            video_name = data.videoInfos[i].videoName;
+            let video_url = data.videoInfos[i].videoUrl;
+            let video_name = data.videoInfos[i].videoName;
             $(tmp).on("click",function(){
                 url = "play_video?video_url="+video_url+"&video_name="+video_name;//此处拼接内容
-                window.location.href = url;});
+                window.open(url);});
         }); 
-        })(i)
     }
 
     });
 
 })
     </script>
-
-
-<!--
-<script type="text/javascript">
-        var ht="";
-    
-    for(var i=0;i<23;i++){ //data.count指的是所有视频的数量
-        (function(i){
-        ht+="<div class='item a-hover'><a id='anima_vd"+(i+1)+"' target='_blank'><div class='pic'><img src="+
-        "../static/images/toplog.png"+"></div><p class='a-hover'>"+"dadada"+"</p></a></div>"; 
-        })(i)
-    }
-
-    ht+="<i></i><i></i><i></i><i></i><i></i><i></i>"
-    document.getElementById("anicol").innerHTML=ht;
-
-    for(var i=0;i<23;i++){ //data.count指的是所有视频的数量
-        (function(i){
-        var tmp="#anima_vd"+(i+1);
-        $(function(){
-            video_url = "http://vfx.mtime.cn/Video/2019/03/21/mp4/190321153853126488.mp4";
-            video_name = "dadadad";
-            $(tmp).on("click",function(){
-                url = "playvideo.html?video_url="+video_url+"&video_name="+video_name;//此处拼接内容
-                window.location.href = url;});
-        }); 
-        })(i)
-    }
-</script>
--->
 
 </html>
 
