@@ -196,7 +196,7 @@ def getMusic(message):
             ret.append(result[i])
     else:
         ret = result
-    emit('get_' + Myconstants.VIDEO_CATE_CACHE[1], {"videoInfos": ret})
+    emit('get_' + Myconstants.VIDEO_CATE_CACHE[1], {"videoInfos": ret, "count": len(ret)})
 
     # 返回信息, 按照如下格式
     # {"videoInfos" : [ {videoUrl:val, videoName:val, videoGraph:val}, [], [], [], []] }
@@ -218,7 +218,7 @@ def getDance(message):
             ret.append(result[i])
     else:
         ret = result
-    emit('get_' + Myconstants.VIDEO_CATE_CACHE[2], {"videoInfos": ret})
+    emit('get_' + Myconstants.VIDEO_CATE_CACHE[2], {"videoInfos": ret, "count": len(ret)})
 
     # 返回信息, 按照如下格式
     # {"videoInfos" : [ {videoUrl:val, videoName:val, videoGraph:val}, [], [], [], []] }
@@ -240,7 +240,7 @@ def getTechnology(message):
             ret.append(result[i])
     else:
         ret = result
-    emit('get_' + Myconstants.VIDEO_CATE_CACHE[3], {"videoInfos": ret})
+    emit('get_' + Myconstants.VIDEO_CATE_CACHE[3], {"videoInfos": ret, "count": len(ret)})
 
     # 返回信息, 按照如下格式
     # {"videoInfos" : [ {videoUrl:val, videoName:val, videoGraph:val}, [], [], [], []] }
@@ -262,7 +262,7 @@ def getLife(message):
             ret.append(result[i])
     else:
         ret = result
-    emit('get_' + Myconstants.VIDEO_CATE_CACHE[4], {"videoInfos": ret})
+    emit('get_' + Myconstants.VIDEO_CATE_CACHE[4], {"videoInfos": ret, "count": len(ret)})
 
     # 返回信息, 按照如下格式
     # {"videoInfos" : [ {videoUrl:val, videoName:val, videoGraph:val}, [], [], [], []] }
@@ -277,14 +277,17 @@ def getMovie(message):
     db = MysqlUtil()
     result = db.fetchall(Myconstants.TABLE_VIDEO_INFO,
                          f"{Myconstants.VIDEO_CATE}='{Myconstants.VIDEO_CATE_CACHE[5]}'")
+    __output(result)
     random.shuffle(result)
+    __output(result)
     ret = []
     if needNum != -1:
         for i in range(0, min(needNum, len(result)), 1):
             ret.append(result[i])
     else:
         ret = result
-    emit('get_' + Myconstants.VIDEO_CATE_CACHE[5], {"videoInfos": ret})
+    __output(ret)
+    emit('get_' + Myconstants.VIDEO_CATE_CACHE[5], {"videoInfos": ret, "count": len(ret)})
 
     # 返回信息, 按照如下格式
     # {"videoInfos" : [ {videoUrl:val, videoName:val, videoGraph:val}, [], [], [], []] }
@@ -306,7 +309,7 @@ def getAnimation(message):
             ret.append(result[i])
     else:
         ret = result
-    emit('get_' + Myconstants.VIDEO_CATE_CACHE[0], {"videoInfos": ret})
+    emit('get_' + Myconstants.VIDEO_CATE_CACHE[0], {"videoInfos": ret, "count": len(ret)})
 
     # 返回信息, 按照如下格式
     # {"videoInfos" : [ {videoUrl:val, videoName:val, videoGraph:val}, [], [], [], []] }
