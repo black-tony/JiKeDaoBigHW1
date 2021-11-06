@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>biubiu后台管理界面</title>
+  <link rel="stylesheet" href="../static/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="../static/css/backstage.css"/>
+  <script src="../static/js/jquery.min.js"></script>
+  <script src="../static/js/bootstrap.min.js"></script>
+  <script src="../static/js/jquery.params.js"></script>
+  <script src="../static/js/socket.io.js"></script>
+</head>
+
+<body>
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="navbar-brand">后台管理界面</div>
+    </div>
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">用户管理</a></li>
+        <li><a href="http://127.0.0.1:5000/plane.html">弹幕管理</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container user">
+  <div class="col-md-10">
+    <div class="page-header">
+      <h1>用户管理</h1>
+    </div>
+    <ul class="nav nav-tabs">
+      <li class="active">
+        <a href="#">用户列表</a>
+      </li>
+    </ul>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>用户名</th>
+          <th>密码</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody id="userinfo">
+      </tbody>
+    </table>
+  </div>
+</body>
+
+
+<script type="text/javascript" charset="utf-8">
+$(document).ready(function() {
+    var socket = io();
+
+    socket.emit("get_userlist");
+    /*此处获取全部用户信息*/
+    socket.on("get_userlist", function(data, callback) { 
+    var ht="";
+    for(var i=1;i<=data.count;i++){ //data.count指的是用户的数量
+        (function(i){
+        ht+="<tr><th>"+i+"</th><td>"+data.user[i-1].name+"</td><td>"+data.user[i-1].password+
+          "</td><td><button id="+i+" onclick='delete_user(this)'>删除 </button></td></tr>"; 
+        })(i)
+    }
+    document.getElementById("userinfo").innerHTML=ht;
+    });
+})
+</script>
+
+<script>
+  function delete_user(e) {
+    //alert(e.id)
+    socket.emit("delete_user",{place: e.id})//删除用户表中第i个位置的用户，i从1开始计数
+    location.reload();//刷新界面
+}
+</script>
+
+<!--测试
+<script>     
+    var ht="";
+    for(var i=1;i<=15;i++){ //data.usernum指的是用户的数量
+        (function(i){
+        ht+="<tr><th>"+i+"</th><td>"+"data.user[i-1].username"+"</td><td>"+"data.user[i-1].password"+
+          "</td><td><button id="+i+" onclick='delete_user(this)'>删除 </button></td></tr>"; 
+        })(i)
+    }
+    document.getElementById("userinfo").innerHTML=ht;  
+</script>-->
+
+</html>
