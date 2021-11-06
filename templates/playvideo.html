@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
     <title>biubiu～(∠・ω< )⌒★ Hello~~</title>
@@ -44,12 +44,12 @@
 //
     var video_url = $.query.get("video_url");
     var video_name= $.query.get("video_name");
-    //document.getElementById("title").innerHTML= video_name;
-    document.getElementById("title").innerHTML= "【原神手书】《璃月少年少女闲话逸事》";//测试
+    document.getElementById("title").innerHTML= video_name;
+    //document.getElementById("title").innerHTML= "【原神手书】《璃月少年少女闲话逸事》";//测试
 
   $("#danmup").DanmuPlayer({
-    src:"http://vfx.mtime.cn/Video/2019/03/21/mp4/190321153853126488.mp4",//测试
-    //src:video_url,
+    //src:"http://vfx.mtime.cn/Video/2019/03/21/mp4/190321153853126488.mp4",//测试
+    src:video_url,
     height: "600px", //区域的高度
     width: "1000px", //区域的宽度
     //urlToGetDanmu:"../static/php/query.php",
