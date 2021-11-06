@@ -1,13 +1,18 @@
 .video_title{
-    font-size: 33px!important;
-  
+    font-size: 22px!important;
     line-height: 44px;
     font-weight: bold;
-	text-align:center;
-    margin: 15px 0 20px -950px;
+    color:#fff;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 200px;
+
+    height: 30px;
+    width: 1260px;
 }
 
 
 body{
-    background: #fff;
+    background-image: url("../images/background1.jpg");
+    background-size: cover;
 }
