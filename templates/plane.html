@@ -58,8 +58,9 @@
 
 
 <script type="text/javascript" charset="utf-8">
+var socket = io();
 $(document).ready(function() {
-    var socket = io();
+
 
     socket.emit("get_danmulist");
     /*此处获取全部弹幕信息*/
@@ -75,14 +76,15 @@ $(document).ready(function() {
     document.getElementById("danmuinfo").innerHTML=ht;
     });
 })
+function delete_danmu(e) {
+    //alert(e.id)
+    socket.emit("delete_danmu",{place: e.id});//删除弹幕表中第i个位置的弹幕，i从1开始计数
+    location.reload();//刷新界面
+}
 </script>
 
 <script>
-  function delete_danmu(e) {
-    //alert(e.id)
-    socket.emit("delete_danmu",{place: e.id})//删除弹幕表中第i个位置的弹幕，i从1开始计数
-    location.reload();//刷新界面
-}
+
 </script>
 
 <!--测试

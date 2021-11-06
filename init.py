@@ -400,7 +400,7 @@ def deleteUser(message):
     db = MysqlUtil()
     result = db.fetchall(Myconstants.TABLE_USER_INFO)
     print("INS")
-    orderPlace = message['place']
+    orderPlace = int(message['place'])
     if len(result) >= orderPlace:
         print(orderPlace)
         userInfo = result[orderPlace - 1]
@@ -431,7 +431,7 @@ def getDanmaku():
 def deleteDanmaku(message):
     db = MysqlUtil()
     result = db.fetchall(Myconstants.TABLE_DANMAKU_INFO)
-    orderPlace = message['place']
+    orderPlace = int(message['place'])
     if len(result) >= orderPlace:
         print(orderPlace)
         DInfo = result[orderPlace - 1]
