@@ -24,7 +24,7 @@
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li class="active"><a href="#">用户管理</a></li>
-        <li><a href="http://127.0.0.1:5000/plane.html">弹幕管理</a></li>
+        <li><a href="http://127.0.0.1:5000/danmaku_config">弹幕管理</a></li>
       </ul>
     </div>
   </div>
@@ -57,8 +57,9 @@
 
 
 <script type="text/javascript" charset="utf-8">
+var socket = io();
 $(document).ready(function() {
-    var socket = io();
+
 
     socket.emit("get_userlist");
     /*此处获取全部用户信息*/
@@ -73,14 +74,17 @@ $(document).ready(function() {
     document.getElementById("userinfo").innerHTML=ht;
     });
 })
+function delete_user(e) {
+    //alert(e.id)
+    //var socket = io();
+    socket.emit("delete_user",{place: e.id});//删除用户表中第i个位置的用户，i从1开始计数
+    location.reload();//刷新界面
+}
 </script>
 
 <script>
-  function delete_user(e) {
-    //alert(e.id)
-    socket.emit("delete_user",{place: e.id})//删除用户表中第i个位置的用户，i从1开始计数
-    location.reload();//刷新界面
-}
+
+
 </script>
 
 <!--测试

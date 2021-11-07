@@ -1,6 +1,5 @@
 import os
 
-import pymysql
 import Myconstants
 
 host = Myconstants.HOST_CONST
@@ -9,10 +8,11 @@ port = Myconstants.PORT_CONST
 password = Myconstants.PASSWORD_CONST
 database = Myconstants.DATABASE_CONST
 
-#
+
+# #
 # def __createTable(tableName, tableInfo, primaryKey):
-#     db = pymysql.connect(host=host, port=port, user=user, password=password, db=database)
-#     cursor = db.cursor(cursor=pymysql.cursors.DictCursor)
+#     # db = pymysql.connect(host=host, port=port, user=user, password=password, db=database)
+#     # cursor = db.cursor(cursor=pymysql.cursors.DictCursor)
 #     sqlOrder = "CREATE TABLE IF NOT EXISTS " + f'{tableName}' + " ("
 #     notFirst = 0
 #     for key, value in tableInfo.items():
@@ -32,11 +32,11 @@ database = Myconstants.DATABASE_CONST
 #             sqlOrder += f'{i}'
 #         sqlOrder += ")"
 #     sqlOrder += ");"
-#     # print(sqlOrder)
-#     cursor.execute(sqlOrder)
-#     db.commit()
-#     cursor.close()
-#     db.close()
+#     print(sqlOrder)
+#     # cursor.execute(sqlOrder)
+#     # db.commit()
+#     # cursor.close()
+#     # db.close()
 
 
 # sqlOrder = "CREATE TABLE IF NOT EXIST " + Myconstants.TABLE_USER_INFO + " ("
@@ -54,4 +54,4 @@ database = Myconstants.DATABASE_CONST
 # __createTable(Myconstants.TABLE_DANMAKU_INFO, Myconstants.DANMAKU_INFO, Myconstants.PRIMARY_KEY_DANMAKU_INFO)
 # __createTable(Myconstants.TABLE_VIDEO_INFO, Myconstants.VIDEO_INFO, Myconstants.PRIMARY_KEY_VIDEO_INFO)
 
-os.system(f"mysql -u{user} -p{password} < Db_1106.sql")
+os.system(f"mysql -u{user} -p{password} < dbFile.sql")

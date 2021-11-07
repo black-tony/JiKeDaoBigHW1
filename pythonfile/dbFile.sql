@@ -25,10 +25,16 @@ DROP TABLE IF EXISTS `danmakuinfo`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `danmakuinfo` (
-  `danmakuContent` varchar(100) NOT NULL,
-  `danmakuTimeAxis` int unsigned NOT NULL,
-  `danmakuUser` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+  `danmakuText` varchar(100) NOT NULL,
+  `danmakuColor` varchar(10) NOT NULL,
+  `danmakuSize` int unsigned NOT NULL,
+  `danmakuPos` int unsigned NOT NULL,
+  `danmakuTime` int unsigned NOT NULL,
+  `danmakuUser` varchar(50) NOT NULL,
+  `danmakuVideo` varchar(100) NOT NULL,
+  `danmakuId` int unsigned NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`danmakuId`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,6 +43,7 @@ CREATE TABLE `danmakuinfo` (
 
 LOCK TABLES `danmakuinfo` WRITE;
 /*!40000 ALTER TABLE `danmakuinfo` DISABLE KEYS */;
+INSERT INTO `danmakuinfo` VALUES ('asdasd','#ffffff',1,0,3,'root','66.6万粉丝，66个视频，我用6个粉丝评论和6个乐器写了一首666的歌！',1);
 /*!40000 ALTER TABLE `danmakuinfo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -52,8 +59,9 @@ CREATE TABLE `usersinfo` (
   `userPswd` varchar(50) NOT NULL,
   `userRank` int unsigned NOT NULL,
   `userMail` varchar(50) NOT NULL,
-  PRIMARY KEY (`userName`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+  `userId` int unsigned NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`userId`,`userName`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -62,7 +70,7 @@ CREATE TABLE `usersinfo` (
 
 LOCK TABLES `usersinfo` WRITE;
 /*!40000 ALTER TABLE `usersinfo` DISABLE KEYS */;
-INSERT INTO `usersinfo` VALUES ('admin','admin',99,'null@null.com'),('asd','asd',1,'null@null.com'),('asdasd','asdasdfds',1,'null@null.com'),('root','root',100,'null@null.com');
+INSERT INTO `usersinfo` VALUES ('admin','admin',99,'null@null.com',1),('user1','user1',1,'null@null.com',2),('root','root',100,'null@null.com',3),('user2','user2',1,'asd',6);
 /*!40000 ALTER TABLE `usersinfo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -101,4 +109,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-11-06 16:01:42
+-- Dump completed on 2021-11-07 10:04:09

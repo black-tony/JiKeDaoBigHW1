@@ -1,7 +1,7 @@
 import string
 import traceback
 import pymysql
-import Myconstants
+from pythonfile import Myconstants
 
 _DEBUG = Myconstants.DEBUG
 TABLE_CONST = "employee"

@@ -3,14 +3,14 @@ USER_CONST = "root"
 PORT_CONST = 3306
 PASSWORD_CONST = "Gz8ymJMXfbr#3*5"
 DATABASE_CONST = "bigHW1"
-DEBUG = True
+DEBUG = False
 TABLE_USER_INFO = "usersinfo"
 PRIMARY_KEY_USER_INFO = ["userName"]
 USER_INFO = {
     "userName": "varchar(50)",
     "userPswd": "varchar(50)",
     "userRank": "int unsigned",
-    "userMail": "varchar(50)"
+    "userMail": "varchar(50)",
 }
 USER_NAME = "userName"
 USER_PSWD = "userPswd"
@@ -18,19 +18,25 @@ USER_RANK = "userRank"
 USER_MAIL = "userMail"
 
 TABLE_DANMAKU_INFO = "danmakuinfo"
-PRIMARY_KEY_DANMAKU_INFO = []
+PRIMARY_KEY_DANMAKU_INFO = ["danmakuId"]
 DANMAKU_INFO = {
     "danmakuText": "varchar(100)",
     "danmakuColor": "varchar(10)",
     "danmakuSize": "int, unsigned",
-    "danmukuPos" : 'int unsigned',
-    "danmukuTime": 'int unsigned',
-    "danmukuUser": 'varchar(50)'
+    "danmakuPos": 'int unsigned',
+    "danmakuTime": 'int unsigned',
+    "danmakuUser": 'varchar(50)',
+    "danmakuVideo": "varchar(100)",
+    "danmakuId": "int unsigned AUTO_INCREASE"
 }
 D_TEXT = "danmakuText"
 D_TIME = "danmakuTime"
 D_USER = "danmakuUser"
-# TODO : 还有几个
+D_COLOR = "danmakuColor"
+D_SIZE = "danmakuSize"
+D_POS = "danmakuPos"
+D_VIDEO = "danmakuVideo"
+D_ID = "danmakuId"
 
 TABLE_VIDEO_INFO = "videoinfo"
 PRIMARY_KEY_VIDEO_INFO = ["videoUrl"]

@@ -171,7 +171,7 @@
             var textObj = '{ "text":"' + text + '","color":"' + color + '","size":"' + size + '","position":"' + position + '","time":' + time + '}';
             var tableEle = '"' + text + '","' + color + '",' + size + ',' + position + ',' + time;
             
-
+            var video_name= $.query.get("video_name");
             var socket = io();
             var userid;
             socket.emit("get_userid");
@@ -183,7 +183,8 @@
                 danmu_size:size,
                 danmu_position:position,
                 danmu_time:time,
-                danmu_userid:userid
+                danmu_userid:userid,
+                danmu_video:video_name
             });
 
             });
