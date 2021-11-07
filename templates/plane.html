@@ -60,8 +60,6 @@
 <script type="text/javascript" charset="utf-8">
 var socket = io();
 $(document).ready(function() {
-
-
     socket.emit("get_danmulist");
     /*此处获取全部弹幕信息*/
     socket.on("get_danmulist", function(data, callback) { 
@@ -82,7 +80,6 @@ function delete_danmu(e) {
     location.reload();//刷新界面
 }
 </script>
-
 <script>
 
 </script>
