@@ -134,25 +134,6 @@
             }
         });
 
-
-        //从后端获取弹幕
-        this.getDanmu = function () {
-            $.get(that.options.urlToGetDanmu, function (data, status) {
-                danmuFromSql = eval(data);
-                for (var i = 0; i < danmuFromSql.length; i++) {
-                    try {
-                        var danmuLs = eval(danmuFromSql[i]);
-                    } catch (e) {
-                        continue;
-                    }
-                    $(that.id + ' .danmu-div').danmu("addDanmu", danmuLs);
-                }
-            });
-        };
-
-        if (options.urlToGetDanmu)
-            this.getDanmu();
-
         //发送弹幕
         this.sendDanmu = function (e) {
             var text = $(e.data.that.id + " .danmu-input").get(0).value;
@@ -190,10 +171,7 @@
             });
 
 
-            if (e.data.that.options.urlToPostDanmu)
-                $.post(e.data.that.options.urlToPostDanmu, {
-                    tb:tableEle
-                });
+         
             textObj = '{ "text":"' + text + '","color":"' + color + '","size":"' + size + '","position":"' + position + '","time":' + time + ',"isnew":""}';
             var newObj = eval('(' + textObj + ')');
             $(e.data.that.id + " .danmu-div").danmu("addDanmu", newObj);
