@@ -1,4 +1,5 @@
 import random
+
 import flask
 from flask import request, render_template, redirect, session, url_for
 from flask_socketio import SocketIO, emit, disconnect
@@ -47,8 +48,10 @@ def login():
             elif passWord != result[Myconstants.USER_PSWD]:
                 findResult = 2
             if findResult > 0:
-                socketio.emit("login_response", {"error_code": findResult}, namespace='/login')
-                return render_template("Login_new.html")
+                # socketio.emit("login_response", {"error_code": findResult})
+                __output(findResult)
+                session['login_fail'] = findResult
+                return redirect("/login")
             # 找到暂时先转到生成的网页
             session['username'] = userName
             session['level'] = result[Myconstants.USER_RANK]
@@ -65,7 +68,9 @@ def login():
                     return redirect(url_for('playPage', video_url=videoUrl, video_name=videoName))
             else:
                 return redirect(url_for('mainPage'))
-        return redirect("/login")
+        else:
+            session['login_response'] = 3
+            return redirect("/login")
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -87,8 +92,13 @@ def register():
                                  Myconstants.USER_PSWD, Myconstants.USER_RANK)
             # username重复 或者email 重复
             if result:
-                socketio.emit("register_response", {"error_code": 1})
-                return
+                session["register_fail"] = 1
+                # socketio.emit("register_response", {"error_code": 1})
+                return redirect('/register')
+            # 密码不够长, 返回重新写
+            if len(passWord) < 6:
+                session["register_fail"] = 3
+                return redirect('/register')
             # 没找到就可以插入数据库
             db = MysqlUtil()
             tmpDict = {Myconstants.USER_NAME: f'"{userName}"',
@@ -97,7 +107,11 @@ def register():
                        Myconstants.USER_MAIL: '"null@null.com"'
                        }
             db.insert(Myconstants.TABLE_USER_INFO, tmpDict)
-        return redirect("/login")
+            session['login_fail'] = 4
+            return redirect("/login")
+        else:
+            session['register_fail'] = 2
+            return redirect('/register')
 
 
 @app.route('/index', methods=['GET'])
@@ -168,6 +182,20 @@ def configUser():
 @app.route('/danmaku_config')
 def configDanmaku():
     return render_template('plane.html')
+
+
+@socketio.on('get_previous_login')
+def getPreviousLogin():
+    if "login_fail" in session:
+        socketio.emit("login_response", {"error_code": session['login_fail']})
+        session.pop('login_fail')
+
+
+@socketio.on('get_previous_register')
+def getPreviousRegister():
+    if "register_fail" in session:
+        socketio.emit("register_response", {"error_code": session['register_fail']})
+        session.pop('register_fail')
 
 
 @socketio.on('disconnect', namespace='/login')
@@ -443,5 +471,5 @@ def getUsergrade():
 
 
 if __name__ == "__main__":
-    socketio.run(app)
+    socketio.run(app, debug=True)
     # app.run(debug=True)
