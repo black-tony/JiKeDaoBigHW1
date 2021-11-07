@@ -45,17 +45,32 @@
 	<script src="../static/js/jquery.min.js"></script>
 	<script src="../static/js/socket.io.js"></script>
 	<script type="text/javascript" charset="utf-8">
-	$(document).ready(function() {
-		var socket = io();
-		socket.emit("get_previous_register");
-		socket.on("register_response", function(data, callback) {
-			if(data.error_code==1)
+	// $(document).ready(function() {
+	// 	var socket = io();
+	// 	socket.emit("get_previous_register");
+	// 	socket.on("register_response", function(data, callback) {
+	// 		if(data.error_code==1)
+	// 			alert("用户名重复!");
+	// 		else if(data.error_code==2)
+	// 			alert("请输入要注册的用户名和密码!");
+	// 		else if(data.error_code==3)
+	// 			alert("密码长度太短!");
+	// 	});
+	// })
+	window.onload = function(){
+		switch("{{register_response}}"){
+			case 1:
 				alert("用户名重复!");
-			else if(data.error_code==2)
+				break;
+			case 2:
 				alert("请输入要注册的用户名和密码!");
-			else if(data.error_code==3)
-				alert("密码长度太短!");
-		});
-	})
+				break;
+			case 3:
+				alert("密码长度太短!");	
+				break;
+			default:
+				break;
+		}
+	}
 	</script>
 </html>
