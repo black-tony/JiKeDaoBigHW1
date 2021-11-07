@@ -69,7 +69,7 @@ def login():
             else:
                 return redirect(url_for('mainPage'))
         else:
-            session['login_response'] = 3
+            session['login_fail'] = 3
             return redirect("/login")
 
 
@@ -107,7 +107,6 @@ def register():
                        Myconstants.USER_MAIL: '"null@null.com"'
                        }
             db.insert(Myconstants.TABLE_USER_INFO, tmpDict)
-            session['login_fail'] = 4
             return redirect("/login")
         else:
             session['register_fail'] = 2
@@ -471,5 +470,5 @@ def getUsergrade():
 
 
 if __name__ == "__main__":
-    socketio.run(app, debug=True)
+    socketio.run(app)
     # app.run(debug=True)
