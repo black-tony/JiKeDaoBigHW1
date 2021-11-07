@@ -60,17 +60,17 @@
 		});
 	})
 	window.onload = function(){
-		switch("{{register_response}}"){
-			case 1:
+		switch("{{login_response}}"){
+			case '1':
 				alert("无此用户信息");
 				break;
-			case 2:
+			case '2':
 				alert("输入密码错误");
 				break;
-			case 3:
+			case '3':
 				alert("请输入用户名和密码!");
 				break;
-			case 4:
+			case '4':
 				alert("注册成功!")
 				break;
 			default:
