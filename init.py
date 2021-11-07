@@ -3,8 +3,8 @@ import flask
 from flask import request, render_template, redirect, session, url_for
 from flask_socketio import SocketIO, emit, disconnect
 
-import Myconstants
-from DatabassTool import MysqlUtil
+from pythonfile import Myconstants
+from pythonfile.DatabassTool import MysqlUtil
 
 app = flask.Flask(__name__)
 app.config['SECRET_KEY'] = "r`9[M-AtuO"
@@ -324,8 +324,6 @@ def getAnimation(message):
     # videoGraph: ./static/XXX.png
 
 
-# TODO: 测试弹幕模块
-
 # {
 # 'danmu_text': 'asdasd',
 # 'danmu_color': '#ffffff',
@@ -350,7 +348,6 @@ def receiveDanmaku(message):
         Myconstants.D_VIDEO: f"'{message['danmu_video']}'"
     }
     db.insert(Myconstants.TABLE_DANMAKU_INFO, danmakuInfo)
-    # TODO: 根据需要进行broadcast
 
 
 @socketio.on('get_userid')
@@ -399,16 +396,12 @@ def returnUserList():
 def deleteUser(message):
     db = MysqlUtil()
     result = db.fetchall(Myconstants.TABLE_USER_INFO)
-    print("INS")
     orderPlace = int(message['place'])
     if len(result) >= orderPlace:
-        print(orderPlace)
         userInfo = result[orderPlace - 1]
         if session['level'] > userInfo[Myconstants.USER_RANK]:
             ndb = MysqlUtil()
             ndb.delete(Myconstants.TABLE_USER_INFO, f"{Myconstants.USER_NAME}='{userInfo[Myconstants.USER_NAME]}'")
-    else:
-        print("FUCK")
 
 
 @socketio.on('get_danmulist')
@@ -433,13 +426,10 @@ def deleteDanmaku(message):
     result = db.fetchall(Myconstants.TABLE_DANMAKU_INFO)
     orderPlace = int(message['place'])
     if len(result) >= orderPlace:
-        print(orderPlace)
         DInfo = result[orderPlace - 1]
         if session['level'] > 1:
             ndb = MysqlUtil()
             ndb.delete(Myconstants.TABLE_DANMAKU_INFO, f"{Myconstants.D_ID}={DInfo[Myconstants.D_ID]}")
-    else:
-        print("FUCK")
 
 
 @socketio.on('get_usergrade')
@@ -453,5 +443,5 @@ def getUsergrade():
 
 
 if __name__ == "__main__":
-    socketio.run(app, debug=True)
+    socketio.run(app)
     # app.run(debug=True)
