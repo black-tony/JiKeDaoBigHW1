@@ -191,7 +191,6 @@
     <script type="text/javascript" charset="utf-8">
     $(document).ready(function() {
     var socket = io();
-    
     /*此处获取视频条数*/
     socket.emit("get_video_nums");
     socket.on("get_video_nums", function(data, callback) { 
@@ -208,7 +207,6 @@
         document.getElementById("movie").innerHTML="<span>电影</span><div class='num'><span>"+
         data.num[5]+"</span></div>";
     });
-    
     /*此处获取用户权限，判断是否可以进入后台*/	
 	socket.emit("get_usergrade");
     socket.on("get_usergrade", function(data, callback) { 
@@ -244,7 +242,7 @@
     }); 
   
     /*将此6条放入动画栏*/
-    for(let i=0;i<6;i++){
+    for(let i=0;i<data.count;i++){
         document.getElementById("anima_vd"+(i+1)).innerHTML= "<div class='pic'><img src="+data.videoInfos[i].videoGraph+"></div><p class='a-hover'>"+data.videoInfos[i].videoName+"</p>";
         let tmp="#anima_vd"+(i+1);
         $(function(){
@@ -285,7 +283,7 @@
     }); 
   
     /*将此6条放入音乐栏*/
-    for(let i=0;i<6;i++){
+    for(let i=0;i<data.count;i++){
         document.getElementById("music_vd"+(i+1)).innerHTML= "<div class='pic'><img src="+data.videoInfos[i].videoGraph+"></div><p class='a-hover'>"+data.videoInfos[i].videoName+"</p>";
         let tmp="#music_vd"+(i+1);
         $(function(){
@@ -316,7 +314,7 @@
  
   
     /*将此6条放入舞蹈栏*/
-    for(let i=0;i<6;i++){
+    for(let i=0;i<data.count;i++){
         document.getElementById("dance_vd"+(i+1)).innerHTML= "<div class='pic'><img src="+data.videoInfos[i].videoGraph+"></div><p class='a-hover'>"+data.videoInfos[i].videoName+"</p>";
         let tmp="#dance_vd"+(i+1);
         $(function(){
@@ -346,7 +344,7 @@
     });   
   
     /*将此6条放入科技栏*/
-    for(let i=0;i<6;i++){
+    for(let i=0;i<data.count;i++){
         document.getElementById("techn_vd"+(i+1)).innerHTML= "<div class='pic'><img src="+data.videoInfos[i].videoGraph+"></div><p class='a-hover'>"+data.videoInfos[i].videoName+"</p>";
         let tmp="#techn_vd"+(i+1);
         $(function(){
@@ -376,7 +374,7 @@
     });   
   
     /*将此6条放入生活栏*/
-    for(let i=0;i<6;i++){
+    for(let i=0;i<data.count;i++){
         document.getElementById("life_vd"+(i+1)).innerHTML= "<div class='pic'><img src="+data.videoInfos[i].videoGraph+"></div><p class='a-hover'>"+data.videoInfos[i].videoName+"</p>";
         let tmp="#life_vd"+(i+1);
         $(function(){
@@ -407,7 +405,7 @@
 
   
     /*将此6条放入电影栏*/
-    for(let i=0;i<6;i++){
+    for(let i=0;i<data.count;i++){
         document.getElementById("movie_vd"+(i+1)).innerHTML= "<div class='pic'><img src="+data.videoInfos[i].videoGraph+"></div><p class='a-hover'>"+data.videoInfos[i].videoName+"</p>";
         let tmp="#movie_vd"+(i+1);
         $(function(){
