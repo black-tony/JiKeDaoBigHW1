@@ -31,7 +31,7 @@ def login():
         return redirect('/index')
 
     if request.method == 'GET':
-        return render_template("Login_new.html")
+        return render_template("Login_new.html", login_response=-1)
     else:
         userName = request.form['username']
         passWord = request.form['password']
@@ -50,8 +50,8 @@ def login():
             if findResult > 0:
                 # socketio.emit("login_response", {"error_code": findResult})
                 __output(findResult)
-                session['login_fail'] = findResult
-                return redirect("/login")
+                # session['login_fail'] = findResult
+                return render_template("Login_new.html", login_response=findResult)
             # 找到暂时先转到生成的网页
             session['username'] = userName
             session['level'] = result[Myconstants.USER_RANK]
@@ -69,8 +69,8 @@ def login():
             else:
                 return redirect(url_for('mainPage'))
         else:
-            session['login_response'] = 3
-            return redirect("/login")
+            # session['login_fail'] = 3
+            return render_template('Login_new.html', login_response=3)
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -80,7 +80,7 @@ def register():
         return redirect('/index')
 
     if request.method == 'GET':
-        return render_template("Register.html")
+        return render_template("Register.html", register_response=-1)
     else:
         userName = request.form['username']
         passWord = request.form['password']
@@ -92,13 +92,13 @@ def register():
                                  Myconstants.USER_PSWD, Myconstants.USER_RANK)
             # username重复 或者email 重复
             if result:
-                session["register_fail"] = 1
+                # session["register_fail"] = 1
                 # socketio.emit("register_response", {"error_code": 1})
-                return redirect('/register')
+                return render_template('Register.html', register_response=1)
             # 密码不够长, 返回重新写
             if len(passWord) < 6:
                 session["register_fail"] = 3
-                return redirect('/register')
+                return render_template('Register.html', register_response=3)
             # 没找到就可以插入数据库
             db = MysqlUtil()
             tmpDict = {Myconstants.USER_NAME: f'"{userName}"',
@@ -107,11 +107,10 @@ def register():
                        Myconstants.USER_MAIL: '"null@null.com"'
                        }
             db.insert(Myconstants.TABLE_USER_INFO, tmpDict)
-            session['login_fail'] = 4
-            return redirect("/login")
+            return render_template('Login_new.html', login_response=4)
         else:
-            session['register_fail'] = 2
-            return redirect('/register')
+            # session['register_fail'] = 2
+            return render_template('Register.html', register_response=2)
 
 
 @app.route('/index', methods=['GET'])
@@ -471,5 +470,5 @@ def getUsergrade():
 
 
 if __name__ == "__main__":
-    socketio.run(app, debug=True)
+    socketio.run(app)
     # app.run(debug=True)
